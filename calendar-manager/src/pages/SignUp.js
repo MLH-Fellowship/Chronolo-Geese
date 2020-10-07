@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import * as firebase from "firebase";
 
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
+import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
+import { AccountCircle } from '@material-ui/icons';
 import { Link as LinkTo } from "react-router-dom";
+
+
 
 function SignUp() {
   const [error, setError] = useState("");
@@ -45,8 +48,26 @@ function SignUp() {
       });
   };
 
+
   return (
     <div>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
+            CHRONOLO-GEESE
+          </Typography>
+          <Button href="/" color="inherit">Home</Button>
+          <Button href="/classrooms" color="inherit">Classrooms</Button>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
       <Grid
         container
         fullWidth
@@ -54,7 +75,7 @@ function SignUp() {
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ paddingTop: "15%" }}
+        style={{ paddingTop: "8%" }}
       >
         <Grid
           container

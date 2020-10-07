@@ -2,6 +2,7 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Login from "./pages/Login";
+import Landing from "./pages/Landing";
 import SignUp from "./pages/SignUp";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -17,7 +18,7 @@ function App() {
           <Login />
         </Route>
         <Route path="/">
-          <SignUp />
+          <Landing />
         </Route>
       </Switch>
     </Router>
