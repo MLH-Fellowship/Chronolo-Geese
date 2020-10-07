@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import * as firebase from 'firebase';
+import * as firebase from "firebase";
 
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
+import { Link as LinkTo } from "react-router-dom";
 
 function SignUp() {
   const [error, setError] = useState("");
@@ -20,11 +21,11 @@ function SignUp() {
     storageBucket: "chronolo-geese.appspot.com",
     messagingSenderId: "538915612147",
     appId: "1:538915612147:web:2264447c48c615794f5e86",
-    measurementId: "G-0F8Q557ERB"
+    measurementId: "G-0F8Q557ERB",
   };
 
   //TODO get .env working
-  const dotenv = require('dotenv');
+  const dotenv = require("dotenv");
   const env = dotenv.config().parse;
 
   if (!firebase.apps.length) {
@@ -33,7 +34,8 @@ function SignUp() {
 
   let submit = () => {
     console.log(email, password);
-    firebase.auth()
+    firebase
+      .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((res) => setError("you have successfully signed up"))
       .catch(function (error) {
@@ -105,11 +107,11 @@ function SignUp() {
             </Button>
           </Grid>
 
-          {/* <LinkTo to="/signin"> */}
-          <Link component="button" variant="body2">
-            Log In Instead
-          </Link>
-          {/* </LinkTo> */}
+          <LinkTo to="/login">
+            <Link component="button" variant="body2">
+              Log In Instead
+            </Link>
+          </LinkTo>
         </Grid>
         <Typography variant="h6">{error}</Typography>
       </Grid>

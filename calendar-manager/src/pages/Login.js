@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
-
+import { Link as LinkTo } from "react-router-dom";
 import * as firebase from "firebase";
 
 function Login() {
@@ -92,11 +92,11 @@ function Login() {
             </Button>
           </Grid>
 
-          {/* <LinkTo to="/signin"> */}
+          <LinkTo to="/signin">
           <Link component="button" variant="body2">
             Sign In Instead
           </Link>
-          {/* </LinkTo> */}
+          </LinkTo>
         </Grid>
         <Typography variant="h6">{error}</Typography>
       </Grid>
