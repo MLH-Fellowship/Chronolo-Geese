@@ -7,11 +7,13 @@ import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import { Link as LinkTo } from "react-router-dom";
 import * as firebase from "firebase";
+import {useHistory} from 'react-router-dom';
 
 function Login() {
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   //TODO .env
   const firebaseConfig = {
@@ -32,7 +34,7 @@ function Login() {
   //we can prolly combine the login/signup form tog.... reduce code. 
   // TODO 
   let submit = () => {
-    console.log(email, password);
+    // console.log(email, password);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -43,6 +45,7 @@ function Login() {
         var errorMessage = error.message;
         // ...
       });
+      history.push("/home");
   };
 
   return (

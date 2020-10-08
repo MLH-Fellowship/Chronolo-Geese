@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import * as firebase from "firebase";
 
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
+// import { AccountCircle } from '@material-ui/icons';
 import { Link as LinkTo } from "react-router-dom";
+import {useHistory} from 'react-router-dom';
+import {
+  useFirestore,
+} from 'reactfire';
 
 
 
@@ -15,6 +19,8 @@ function SignUp() {
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
+  const userCollection = useFirestore().collection('users');
 
   const firebaseConfig = {
     apiKey: "AIzaSyAE6rcfe2QjFdVwwVtQN6dvEITo4mFgVPg",
@@ -35,39 +41,43 @@ function SignUp() {
     firebase.initializeApp(firebaseConfig);
   }
 
-  let submit = () => {
+  let submit = async () => {
     console.log(email, password);
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((res) => setError("you have successfully signed up"))
+      .then((res) => history.push("/home"))
       .catch(function (error) {
         // Handle Errors here.
         setError(error.message);
-        // ...
+        // return;
       });
+      firebase.auth().onAuthStateChanged(async function(user) {
+        if (user) {
+            await userCollection.doc(user.uid).get().then((doc) => {
+              if (!doc.exists) {
+                userCollection.doc(user.uid).set({
+                  displayName: user.displayName,
+                  availability: [],
+                  classCodes: [],
+                  email: user.email,
+                  isStudent: true,
+                  uid: user.uid,
+                });
+              }
+            }).catch(function(error) {
+              console.log('Error getting document:', error);
+            });
+        } else {
+            // No user is signed in.
+            console.log('There is no logged in user');
+        }
+    });
   };
 
 
   return (
-    <div>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
-            CHRONOLO-GEESE
-          </Typography>
-          <Button href="/" color="inherit">Home</Button>
-          <Button href="/classrooms" color="inherit">Classrooms</Button>
-          <IconButton
-            aria-label="account of current user"
-            aria-controls="primary-search-account-menu"
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-
+    <div> 
       <Grid
         container
         fullWidth
