@@ -46,7 +46,7 @@ function SignUp() {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((res) => setError("you have successfully signed up"))
+      .then((res) => history.push("/"))
       .catch(function (error) {
         // Handle Errors here.
         setError(error.message);
@@ -72,7 +72,6 @@ function SignUp() {
             // No user is signed in.
             console.log('There is no logged in user');
         }
-        history.push("/");
     });
   };
 
