@@ -9,15 +9,13 @@ import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/co
 import { AccountCircle } from '@material-ui/icons';
 import { Link as LinkTo } from "react-router-dom";
 import {useHistory} from 'react-router-dom';
+import {AuthCheck, useAuth, useUser, useFirestore} from 'reactfire';
 
 
 function Landing() {
 
     const history = useHistory();
-
-    function homePage() {
-        history.push('/');
-      }
+    const user = useUser();
 
     return (
         <div>
@@ -32,7 +30,7 @@ function Landing() {
                         aria-label="account of current user"
                         aria-controls="primary-search-account-menu"
                         color="inherit"
-                        onClick={() => history.push('/profile/12345')}
+                        onClick={() => history.push('/profile/' + user.uid)}
                     >
                         <AccountCircle />
                     </IconButton>
