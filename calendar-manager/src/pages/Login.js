@@ -45,7 +45,7 @@ function Login() {
         var errorMessage = error.message;
         // ...
       });
-      history.push("/");
+      history.push("/home");
   };
 
   return (

@@ -1,17 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {
-  useFirestore,
-  AuthCheck,
-  useUser,
-  useFirestoreDocData,
-} from 'reactfire';
+// import {
+//   useUser,
+// } from 'reactfire';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
-import {useParams, useHistory} from 'react-router-dom';
+// import {useParams, useHistory} from 'react-router-dom';
 import Navbar from '../common/Navbar';
 
 const useStyles = makeStyles((theme) => ({
-  email: {
+  title: {
     color: 'purple',
   },
 }));
@@ -19,19 +16,19 @@ const useStyles = makeStyles((theme) => ({
 /**
  * @return {ReactElement} Displays profile page
  */
-export default function Profile() {
-  const history = useHistory();
-  const user = useUser();
+export default function Home() {
+//   const history = useHistory();
+//   const user = useUser();
 //   const [currUser, setCurrUser] = useState(useUser());
   const classes = useStyles();
-  const {uid} = useParams();
+//   const {uid} = useParams();
 //   const userCollection = useFirestore().collection('users');
 
   return (
     <div>
         <Navbar />
-        <Typography variant="h6" className={classes.email}>
-            {user.email}
+        <Typography variant="h3" className={classes.title}>
+            Welcome to Chronolo-Geese
         </Typography>
     </div>
   );

@@ -46,7 +46,7 @@ function SignUp() {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((res) => history.push("/"))
+      .then((res) => history.push("/home"))
       .catch(function (error) {
         // Handle Errors here.
         setError(error.message);

@@ -2,7 +2,7 @@ import React, {Suspense} from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 import Login from "./pages/Login";
-import Landing from "./pages/Landing";
+import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import {FirebaseAppProvider} from 'reactfire';
@@ -32,11 +32,14 @@ function App() {
             <Route path="/login">
               <Login />
             </Route>
+            <Route path="/home">
+              <Home />
+            </Route>
             <Route exact path="/profile/:uid">
               <Profile />
             </Route>
             <Route path="/">
-              <Landing />
+              <Login />
             </Route>
             
           </Switch>
