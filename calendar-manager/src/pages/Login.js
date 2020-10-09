@@ -95,7 +95,7 @@ function Login() {
             </Button>
           </Grid>
 
-          <LinkTo to="/signin">
+          <LinkTo to="/signup">
           <Link component="button" variant="body2">
             Sign Up Instead
           </Link>
