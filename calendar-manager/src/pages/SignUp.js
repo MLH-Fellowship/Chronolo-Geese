@@ -16,6 +16,7 @@ import {
 
 
 function SignUp() {
+  const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,7 +58,7 @@ function SignUp() {
             await userCollection.doc(user.uid).get().then((doc) => {
               if (!doc.exists) {
                 userCollection.doc(user.uid).set({
-                  displayName: user.displayName,
+                  displayName: username,
                   availability: [],
                   classCodes: [],
                   email: user.email,
@@ -96,6 +97,16 @@ function SignUp() {
         >
           <Grid item>
             <Typography variant="h4">Sign Up</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="username"
+              label="username"
+              onChange={(e) => setUsername(e.target.value)}
+              variant="outlined"
+              type="username"
+            />
           </Grid>
           <Grid item xs={12}>
             <TextField

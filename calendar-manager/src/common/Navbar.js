@@ -23,7 +23,7 @@ export default function Navbar() {
                     <Typography variant="h6" style={{ flexGrow: 1 }}>
                         CHRONOLO-GEESE
           </Typography>
-                    <Button href="/" color="inherit">Home</Button>
+                    <Button href="/home" color="inherit">Home</Button>
                     <Button href="/classrooms" color="inherit">Classrooms</Button>
                     <IconButton
                         aria-label="account of current user"
