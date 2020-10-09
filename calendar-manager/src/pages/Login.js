@@ -38,14 +38,14 @@ function Login() {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((res) => setError("you have successfully logged-in"))
+      .then((res) => history.push("/home"))
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
+        setError(error.message);
         // ...
       });
-      history.push("/home");
   };
 
   return (
@@ -97,7 +97,7 @@ function Login() {
 
           <LinkTo to="/signin">
           <Link component="button" variant="body2">
-            Sign In Instead
+            Sign Up Instead
           </Link>
           </LinkTo>
         </Grid>
