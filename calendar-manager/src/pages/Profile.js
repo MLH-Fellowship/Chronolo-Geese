@@ -18,12 +18,8 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   email: {
-<<<<<<< HEAD
     color: '#5E548E',
     font: "Nunito",
-=======
-    color: "purple",
->>>>>>> main
   },
   classCodes: {},
 }));
@@ -50,7 +46,6 @@ export default function Profile() {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography variant="h6" className={classes.email}>
-<<<<<<< HEAD
                 Name: {userData.displayName}
             </Typography>
           </Grid>
@@ -62,9 +57,6 @@ export default function Profile() {
           <Grid item xs={12}>
             <Typography variant="h6" className={classes.email}>
                 Identity: {userData.isStudent ? "Student" : "Professor"}
-=======
-              email: {user.email}
->>>>>>> main
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -73,16 +65,8 @@ export default function Profile() {
           {userData.classCodes.length > 0 ? (
             userData.classCodes.map((v, index) => {
               return (
-<<<<<<< HEAD
-                <Grid item
-                  key={index}
-                  className={classes.classCodes}
-                >
-                    {v}
-=======
                 <Grid item key={index} className={classes.classCodes}>
                   {v.name}
->>>>>>> main
                 </Grid>
               );
             })
