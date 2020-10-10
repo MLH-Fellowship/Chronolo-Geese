@@ -18,11 +18,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#E0B1CB',
     height: "100%",
   },
-  email: {
+  font: {
     color: '#5E548E',
     font: "Nunito",
   },
-  classCodes: {},
+  classCodes: {
+    color: '#5E548E',
+  },
 }));
 
 /**
@@ -34,34 +36,34 @@ export default function Profile() {
   //   const [currUser, setCurrUser] = useState(useUser());
   const classes = useStyles();
   const { uid } = useParams();
-  // const classCollection = useFirestore().collection('classes');
   const userData = useFirestoreDocData(
     useFirestore().collection("users").doc(uid)
   );
-  // console.log(userData);
 
   return (
     <div className={classes.body}>
       <Navbar styles={{ position: "absolute" }} />
-      <Box container="true" m={10}>
+      <Box container="true" m={10} mb={0}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography variant="h6" className={classes.email}>
-                Name: {userData.displayName}
+            <Typography variant="h5" className={classes.font}>
+                <b>NAME</b>: {userData.displayName}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6" className={classes.email}>
-                Email: {user.email}
+            <Typography variant="h5" className={classes.font}>
+                <b>EMAIL</b>: {user.email}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6" className={classes.email}>
-                Identity: {userData.isStudent ? "Student" : "Professor"}
+            <Typography variant="h6" className={classes.font}>
+                <b>IDENTITY</b>: {userData.isStudent ? "Student" : "Professor"}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">Classes:</Typography>
+            <Typography variant="h5" className={classes.font}>
+              <b>CLASSES</b>:
+            </Typography>
           </Grid>
           {userData.classCodes.length > 0 ? (
             userData.classCodes.map((v, index) => {
@@ -74,6 +76,11 @@ export default function Profile() {
           ) : (
             <Grid item>No classes added yet</Grid>
           )}
+          <Grid item xs={12}>
+            <Typography variant="h5" className={classes.font}>
+              <b>SELECT AVAILABILITY</b>:
+            </Typography>
+          </Grid>
           <Grid item xs={12}>
             <Availability uid={uid} />
           </Grid>
