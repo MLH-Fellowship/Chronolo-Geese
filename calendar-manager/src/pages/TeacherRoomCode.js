@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../common/Navbar";
+import { useParams } from "react-router-dom";
 
 import "../styles/TeacherRoomCode.css";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,13 +12,24 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
-import { useFirestore, AuthCheck, useFirestoreDocData } from "reactfire";
+import { useFirestore, useUser, useFirestoreDocData } from "reactfire";
+import * as firebase from "firebase";
+
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
 
 function TeacherRoomCode() {
+  const [open, setOpen] = React.useState(false);
+  const [className, setClassName] = React.useState("");
 
-    // get class codes of user "EdHT5oAKR3OvvDaSVoceUwavyv82"
+  const user = useUser();
+  const { uid } = useParams();
+
   const classes = useFirestoreDocData(
-    useFirestore().collection("users").doc("EdHT5oAKR3OvvDaSVoceUwavyv82")
+    useFirestore().collection("users").doc(uid)
   ).classCodes;
 
   const useStyles = makeStyles({
@@ -27,9 +39,55 @@ function TeacherRoomCode() {
     },
   });
 
-  const addClass = () =>{
-    // useFirestore()
-  }
+  const firestore = useFirestore();
+  const addClass = () => {
+    let id = "";
+    firestore
+      .collection("classes")
+      .add({
+        title: className,
+        professors: [uid],
+        students: [],
+      })
+      .then((pushed_user) => {
+        id = pushed_user.w_.path.segments[1];
+        firestore
+          .collection("users")
+          .doc(uid)
+          .update({
+            classCodes: classes.concat(id),
+          });
+      });
+    setOpen(false);
+  };
+
+  let dia = (
+    <Dialog
+      open={open}
+      onClose={() => setOpen(false)}
+      aria-labelledby="form-dialog-title"
+    >
+      <DialogTitle id="form-dialog-title">Create a New Class</DialogTitle>
+      <DialogContent>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Class Name"
+          onChange={(e) => setClassName(e.target.value)}
+          fullWidth
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setOpen(false)} color="primary">
+          Cancel
+        </Button>
+        <Button onClick={() => addClass()} color="primary">
+          Create Room
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 
   return (
     <div className="bg">
@@ -43,7 +101,6 @@ function TeacherRoomCode() {
               </Typography>
               <Paper>
                 <List className="ov" component="nav" aria-label="classNames">
-                  {console.log(classes)}
                   {classes.map((name) => (
                     <ListItem button>
                       <ListItemText primary={name} />
@@ -60,13 +117,15 @@ function TeacherRoomCode() {
                 variant="contained"
                 disableElevation
                 className={useStyles().root}
-                onClick={() => addClass()}
+                onClick={() => setOpen(true)}
               >
                 <b>NEW</b>
               </Button>
             </div>
           </Grid>
         </Grid>
+
+        {dia}
       </div>
     </div>
   );
