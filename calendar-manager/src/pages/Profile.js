@@ -16,7 +16,7 @@ import Availability from "../profile/Availability";
 const useStyles = makeStyles((theme) => ({
   body: {
     backgroundColor: '#E0B1CB',
-    height: "100vh",
+    height: "100%",
   },
   email: {
     color: '#5E548E',

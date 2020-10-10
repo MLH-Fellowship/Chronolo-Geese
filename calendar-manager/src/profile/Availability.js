@@ -35,21 +35,19 @@ export default function Availability({uid}) {
         usersCollection.doc(uid)
     );
     const [schedule, setSchedule] = useState([]);
-    function loadAvailability() {
+
+    const loadAvailability = () =>  {
         let dateTime = [];
-        // let i;
         for (let i = 0; i < userData.availability.length; i++) {
-            console.log(userData.availability[0]);
-            dateTime.push(userData.availability[0].toDate());
+            dateTime.push(userData.availability[i].toDate());
         }
-        setSchedule(dateTime)
+        setSchedule(dateTime);
+        return dateTime;
     }
-    useEffect(loadAvailability, []);
 
     const handleChange = newSchedule => {
         let firebase_schedule = [];
         setSchedule(newSchedule)
-        console.log(newSchedule);
         for (let i = 0; i < newSchedule.length; i++) {
             firebase_schedule.push(firebase.firestore.Timestamp.fromDate(newSchedule[i]));
         }
@@ -58,11 +56,15 @@ export default function Availability({uid}) {
   
     return (
     <ScheduleSelector
-        selection={schedule}
+        selection={schedule.length == 0 ? loadAvailability() : schedule}
         numDays={5}
         minTime={8}
         maxTime={22}
         hourlyChunks={2}
+        timeFormat='H:mm A'
+        unselectedColor="white"
+        hoveredColor="#9F86C0"
+        selectedColor="#5E548E"
         onChange={handleChange}
     />
     )
