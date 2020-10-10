@@ -42,7 +42,7 @@ export default function Home() {
           2: i3,
         }}
         how={50}
-        time={10}
+        time={40}
         size={"100px"}
         background={"#5e548e"}
       />
