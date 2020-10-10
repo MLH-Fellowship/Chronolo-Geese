@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
+import UserAvailability from "./pages/UserAvailability"
 import {FirebaseAppProvider} from 'reactfire';
 import TeacherRoomCode from "./pages/TeacherRoomCode"
 
@@ -39,7 +40,10 @@ function App() {
             <Route exact path="/profile/:uid">
               <Profile />
             </Route>
-            <Route exact path="/classes/:uid">
+            <Route exact path="/availability/:uid">
+              <UserAvailability />
+            </Route>
+            <Route exact path="/myclasses/:uid">
               <TeacherRoomCode />
             </Route>
             <Route path="/">

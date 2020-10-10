@@ -38,7 +38,7 @@ function Login() {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((res) => history.push("/classes/" + res.user.uid))
+      .then((res) => history.push("/myclasses/" + res.user.uid))
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
