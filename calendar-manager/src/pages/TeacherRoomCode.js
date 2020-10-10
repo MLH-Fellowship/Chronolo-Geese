@@ -1,17 +1,24 @@
 import React from "react";
 import Navbar from "../common/Navbar";
+
+import "../styles/TeacherRoomCode.css";
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import "../styles/TeacherRoomCode.css";
-import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Button from "@material-ui/core/Button";
+
+import { useFirestore, AuthCheck, useFirestoreDocData } from "reactfire";
 
 function TeacherRoomCode() {
-  const classes = ["MATB24", "CSCC01", "CSCB36", "CSCA08", "MGTA01","MATB24", "CSCC01", "CSCB36", "CSCA08", "MGTA01","MATB24", "CSCC01", "CSCB36", "CSCA08", "MGTA01"];
+
+    // get class codes of user "EdHT5oAKR3OvvDaSVoceUwavyv82"
+  const classes = useFirestoreDocData(
+    useFirestore().collection("users").doc("EdHT5oAKR3OvvDaSVoceUwavyv82")
+  ).classCodes;
 
   const useStyles = makeStyles({
     root: {
@@ -19,6 +26,10 @@ function TeacherRoomCode() {
       background: "#E0B1CB",
     },
   });
+
+  const addClass = () =>{
+    // useFirestore()
+  }
 
   return (
     <div className="bg">
@@ -32,6 +43,7 @@ function TeacherRoomCode() {
               </Typography>
               <Paper>
                 <List className="ov" component="nav" aria-label="classNames">
+                  {console.log(classes)}
                   {classes.map((name) => (
                     <ListItem button>
                       <ListItemText primary={name} />
@@ -42,16 +54,17 @@ function TeacherRoomCode() {
             </div>
           </Grid>
           <Grid item className="cont">
-              <div className="paper_button">
-                <img src={require("../assets/classroom.svg")} />
-                <Button
-                  variant="contained"
-                  disableElevation
-                  className={useStyles().root}
-                >
-                  <b>NEW</b>
-                </Button>
-              </div>
+            <div className="paper_button">
+              <img src={require("../assets/classroom.svg")} />
+              <Button
+                variant="contained"
+                disableElevation
+                className={useStyles().root}
+                onClick={() => addClass()}
+              >
+                <b>NEW</b>
+              </Button>
+            </div>
           </Grid>
         </Grid>
       </div>
