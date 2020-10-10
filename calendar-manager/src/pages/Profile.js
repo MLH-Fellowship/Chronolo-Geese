@@ -13,8 +13,13 @@ import {useParams, useHistory} from 'react-router-dom';
 import Navbar from '../common/Navbar';
 
 const useStyles = makeStyles((theme) => ({
+  body: {
+    backgroundColor: '#E0B1CB',
+    height: "100vh",
+  },
   email: {
-    color: 'purple',
+    color: '#5E548E',
+    font: "Nunito",
   },
   classCodes: {
 
@@ -35,7 +40,7 @@ export default function Profile() {
   // console.log(userData);
 
   return (
-    <div>
+    <div className={classes.body}>
       <Navbar />
       <Box
         container='true'
@@ -44,7 +49,17 @@ export default function Profile() {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography variant="h6" className={classes.email}>
-                email: {user.email}
+                Name: {userData.displayName}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h6" className={classes.email}>
+                Email: {user.email}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h6" className={classes.email}>
+                Identity: {userData.isStudent ? "Student" : "Professor"}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -59,7 +74,7 @@ export default function Profile() {
                   key={index}
                   className={classes.classCodes}
                 >
-                    {v.name}
+                    {v}
                 </Grid>
               );
             }) : <Grid item>No classes added yet</Grid>
