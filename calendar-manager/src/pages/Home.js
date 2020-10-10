@@ -46,43 +46,7 @@ export default function Home() {
           size={"100px"}
           background={"#5e548e"}
         />
-  return (
-    <div>
-      <Sky
-        images={{
-          0: i1,
-          1: i2,
-          2: i3,
-        }}
-        how={50}
-        time={40}
-        size={"100px"}
-        background={"#5e548e"}
-      />
 
-      <Navbar styles={{ position: "absolute" }} />
-      <div className="back">
-        <div>
-          <Grid container spacing={5}>
-            <Grid item className="cont">
-              <div className="left">
-                <Typography variant="h3" style={{ color: "#E0B1CB" }}>
-                  <b>CHRONOLO-GEESE</b>
-                </Typography>
-                <Typography variant="h5" style={{ color: "#E0B1CB" }}>
-                  <b>GIT ORGANIZED.</b>
-                </Typography>
-                <Typography variant="h5" style={{ color: "#E0B1CB" }}>
-                  <b>GIT ON TIME.</b>
-                </Typography>
-              </div>
-            </Grid>
-            <Grid item className="cont">
-              <Paper className="right">
-                  {/* maybe make login-sign in a single component and have it here... check if user is logged-in then 
-                  choose to give an option to login/signin...
-                  if not logged in, refer to figma form */}
-              </Paper>
         <Navbar styles={{ position: "absolute" }} />
         <div className="back">
           <div>
