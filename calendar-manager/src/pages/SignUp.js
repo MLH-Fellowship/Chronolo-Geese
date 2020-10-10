@@ -8,7 +8,7 @@ import Link from "@material-ui/core/Link";
 import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
 // import { AccountCircle } from '@material-ui/icons';
 import { Link as LinkTo } from "react-router-dom";
-import {useHistory} from 'react-router-dom';
+import {useHistory, Redirect} from 'react-router-dom';
 import {
   useFirestore,
 } from 'reactfire';
