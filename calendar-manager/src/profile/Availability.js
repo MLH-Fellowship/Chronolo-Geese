@@ -35,6 +35,7 @@ export default function Availability({uid}) {
         usersCollection.doc(uid)
     );
     const [schedule, setSchedule] = useState([]);
+    const [initialize, setInitialize] = useState(false);
 
     const loadAvailability = () =>  {
         let dateTime = [];
@@ -42,6 +43,7 @@ export default function Availability({uid}) {
             dateTime.push(userData.availability[i].toDate());
         }
         setSchedule(dateTime);
+        setInitialize(true);
         return dateTime;
     }
 
@@ -56,7 +58,7 @@ export default function Availability({uid}) {
   
     return (
     <ScheduleSelector
-        selection={schedule.length == 0 ? loadAvailability() : schedule}
+        selection={schedule.length === 0 && !initialize ? loadAvailability() : schedule}
         numDays={5}
         minTime={8}
         maxTime={22}
