@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
+import Sky from "react-sky";
 // import {
 //   useUser,
 // } from 'reactfire';
@@ -6,33 +7,48 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 // import {useParams, useHistory} from 'react-router-dom';
-import Navbar from '../common/Navbar';
-import '../styles/Home.css'
+import Navbar from "../common/Navbar";
+import "../styles/Home.css";
+
+import i1 from "../assets/clock.png";
+import i2 from "../assets/timetable.png";
+import i3 from "../assets/goose.png";
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    color: 'purple',
+    color: "purple",
   },
 }));
-
 
 /**
  * @return {ReactElement} Displays profile page
  */
 export default function Home() {
-//   const history = useHistory();
-//   const user = useUser();
-//   const [currUser, setCurrUser] = useState(useUser());
+  //   const history = useHistory();
+  //   const user = useUser();
+  //   const [currUser, setCurrUser] = useState(useUser());
   const classes = useStyles();
-//   const {uid} = useParams();
-//   const userCollection = useFirestore().collection('users');
+  //   const {uid} = useParams();
+  //   const userCollection = useFirestore().collection('users');
 
   return (
-    <>
-      <Navbar styles={{position:'absolute'}}/>
-      <div className="bg">
+    <div>
+      <Sky
+        images={{
+          0: i1,
+          1: i2,
+          2: i3,
+        }}
+        how={50}
+        time={10}
+        size={"100px"}
+        background={"#5e548e"}
+      />
+
+      <Navbar styles={{ position: "absolute" }} />
+      <div className="back">
         <div>
           <Grid container spacing={5}>
             <Grid item className="cont">
@@ -49,14 +65,15 @@ export default function Home() {
               </div>
             </Grid>
             <Grid item className="cont">
-              <div className="paper_button">
-                <img src={require("../assets/classroom.svg")} />
-              </div>
+              <Paper className="right">
+                  {/* maybe make login-sign in a single component and have it here... check if user is logged-in then 
+                  choose to give an option to login/signin...
+                  if not logged in, refer to figma form */}
+              </Paper>
             </Grid>
           </Grid>
         </div>
       </div>
-    </>
+    </div>
   );
 }
-
