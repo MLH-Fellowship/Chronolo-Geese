@@ -13,7 +13,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import { useFirestore, useUser, useFirestoreDocData } from "reactfire";
-import * as firebase from "firebase";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -55,7 +54,7 @@ function TeacherRoomCode() {
           .collection("users")
           .doc(uid)
           .update({
-            classCodes: classes.concat(id),
+            classCodes: classes.concat({code: id, name: className}),
           });
       });
     setOpen(false);
@@ -90,44 +89,46 @@ function TeacherRoomCode() {
   );
 
   return (
-    <div className="bg">
-      {/* <Navbar /> */}
-      <div>
-        <Grid container spacing={5}>
-          <Grid item className="cont">
-            <div className="paper_list">
-              <Typography variant="h5" style={{ color: "#E0B1CB" }}>
-                <b>CLASSROOMS:</b>
-              </Typography>
-              <Paper>
-                <List className="ov" component="nav" aria-label="classNames">
-                  {classes.map((name) => (
-                    <ListItem button>
-                      <ListItemText primary={name} />
-                    </ListItem>
-                  ))}
-                </List>
-              </Paper>
-            </div>
+    <>
+      <Navbar styles={{position:'absolute'}}/>
+      <div className="bg">
+        <div>
+          <Grid container spacing={5}>
+            <Grid item className="cont">
+              <div className="paper_list">
+                <Typography variant="h5" style={{ color: "#E0B1CB" }}>
+                  <b>CLASSROOMS:</b>
+                </Typography>
+                <Paper>
+                  <List className="ov" component="nav" aria-label="classNames">
+                    {classes.map((name) => (
+                      <ListItem button>
+                        <ListItemText primary={name.name + " / " + name.code} />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Paper>
+              </div>
+            </Grid>
+            <Grid item className="cont">
+              <div className="paper_button">
+                <img src={require("../assets/classroom.svg")} />
+                <Button
+                  variant="contained"
+                  disableElevation
+                  className={useStyles().root}
+                  onClick={() => setOpen(true)}
+                >
+                  <b>NEW</b>
+                </Button>
+              </div>
+            </Grid>
           </Grid>
-          <Grid item className="cont">
-            <div className="paper_button">
-              <img src={require("../assets/classroom.svg")} />
-              <Button
-                variant="contained"
-                disableElevation
-                className={useStyles().root}
-                onClick={() => setOpen(true)}
-              >
-                <b>NEW</b>
-              </Button>
-            </div>
-          </Grid>
-        </Grid>
 
-        {dia}
+          {dia}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
