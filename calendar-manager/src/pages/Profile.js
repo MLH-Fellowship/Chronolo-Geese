@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   useFirestore,
-  AuthCheck,
+  // AuthCheck,
   useUser,
   useFirestoreDocData,
 } from "reactfire";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import { makeStyles } from "@material-ui/core/styles";
-import { useParams, useHistory } from "react-router-dom";
+import {makeStyles} from "@material-ui/core/styles";
+import {useParams} from "react-router-dom";
 import Navbar from "../common/Navbar";
+import Availability from "../profile/Availability";
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
  * @return {ReactElement} Displays profile page
  */
 export default function Profile() {
-  const history = useHistory();
+  // const history = useHistory();
   const user = useUser();
   //   const [currUser, setCurrUser] = useState(useUser());
   const classes = useStyles();
@@ -41,7 +42,7 @@ export default function Profile() {
 
   return (
     <div className={classes.body}>
-      <Navbar />
+      <Navbar styles={{ position: "absolute" }} />
       <Box container="true" m={10}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -73,6 +74,9 @@ export default function Profile() {
           ) : (
             <Grid item>No classes added yet</Grid>
           )}
+          <Grid item xs={12}>
+            <Availability uid={uid} />
+          </Grid>
         </Grid>
       </Box>
     </div>

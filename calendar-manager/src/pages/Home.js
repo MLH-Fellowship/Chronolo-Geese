@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Sky from "react-sky";
 // import {
 //   useUser,
@@ -6,7 +6,7 @@ import Sky from "react-sky";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 // import {useParams, useHistory} from 'react-router-dom';
 import Navbar from "../common/Navbar";
@@ -16,11 +16,11 @@ import i1 from "../assets/clock.png";
 import i2 from "../assets/timetable.png";
 import i3 from "../assets/goose.png";
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    color: "purple",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   title: {
+//     color: "purple",
+//   },
+// }));
 
 /**
  * @return {ReactElement} Displays profile page
@@ -29,7 +29,7 @@ export default function Home() {
   //   const history = useHistory();
   //   const user = useUser();
   //   const [currUser, setCurrUser] = useState(useUser());
-  const classes = useStyles();
+  // const classes = useStyles();
   //   const {uid} = useParams();
   //   const userCollection = useFirestore().collection('users');
 
