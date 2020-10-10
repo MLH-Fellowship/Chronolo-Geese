@@ -41,8 +41,8 @@ export default function Home() {
             1: i2,
             2: i3,
           }}
-          how={50}
-          time={10}
+          how={30}
+          time={40}
           size={"100px"}
           background={"#5e548e"}
         />

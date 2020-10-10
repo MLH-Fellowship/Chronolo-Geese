@@ -8,30 +8,33 @@ import {
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import {makeStyles} from "@material-ui/core/styles";
-import {useParams} from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+import { useParams } from "react-router-dom";
 import Navbar from "../common/Navbar";
 import Availability from "../profile/Availability";
+import "../styles/Profile.css";
+import { useHistory } from "react-router-dom";
+import { DriveEtaTwoTone } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
-  body: {
-    backgroundColor: '#E0B1CB',
-    height: "100%",
-  },
-  font: {
-    color: '#5E548E',
-  },
   classCodes: {
-    color: '#5E548E',
+    color: "#5E548E",
   },
+  paperBg: {
+    backgroundColor: "#e0b1cb",
+    borderRadius: 50,
+  },
+  cent:{
+    textAlign: 'center',
+  }
 }));
 
 /**
  * @return {ReactElement} Displays profile page
  */
 export default function Profile() {
-  // const history = useHistory();
+  const history = useHistory();
   const user = useUser();
   // console.log(user);
   //   const [currUser, setCurrUser] = useState(useUser());
@@ -41,29 +44,51 @@ export default function Profile() {
     useFirestore().collection("users").doc(uid)
   );
 
-  if (user) {
+  if (!user) {
+    history.push("/login");
+  } else {
     return (
-      <div className={classes.body}>
-        <Navbar styles={{ position: "absolute" }} />
-        <Box container="true" m={10} mb={0}>
+      <div className="prof_bg">
+        <Navbar />
+
+        <Grid
+          container
+          spacing={3}
+          style={{ margin: "5vh", marginTop: "10vh" }}
+        >
+          <Grid item xs={12} className={classes.cent}>
+            <Typography variant="h5">
+              <b>drop your availability below</b>:
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.paperBg} variant="outlined">
+              <Availability uid={uid} />
+            </Paper>
+          </Grid>
+        </Grid>
+
+        {/* <Box container="true" marginTop={10} margin={5}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Typography variant="h5" className={classes.font}>
-                  <b>NAME</b>: {userData.displayName}
+              <Typography variant="h6">
+                <b>NAME</b>: {userData.displayName}
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5" className={classes.font}>
-                  <b>EMAIL</b>: {user.email}
+              <Typography variant="h6">
+                <b>EMAIL</b>: {user.email}
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h6" className={classes.font}>
-                  <b>IDENTITY</b>: {userData.isStudent ? "Student" : "Professor"}
+              <Typography variant="h6">
+                <b>IDENTITY</b>: {userData.isStudent ? "Student" : "Professor"}
               </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h5" className={classes.font}>
+            </Grid> */}
+
+        {/* there is a classes tab. this part could be redundant */}
+        {/* <Grid item xs={12}>
+              <Typography variant="h6">
                 <b>CLASSES</b>:
               </Typography>
             </Grid>
@@ -76,30 +101,27 @@ export default function Profile() {
                 );
               })
             ) : (
-              <Grid item className={classes.font}>No classes added yet</Grid>
-            )}
-            <Grid item xs={12}>
-              <Typography variant="h5" className={classes.font}>
+              <Grid item className={classes.font}>
+                No classes added yet
+              </Grid>
+            )} */}
+
+        {/* <Grid item xs={12}>
+              <Typography variant="h6">
                 <b>SELECT AVAILABILITY</b>:
               </Typography>
             </Grid>
-            <Grid item xs={12}>
-              <Availability uid={uid} />
+            <Grid item xs={12} style={{ marginLeft: "0px" }}>
+              <Paper
+              className={classes.paperBg}
+              variant="outlined"
+              >
+                <Availability uid={uid} />
+              </Paper>
             </Grid>
           </Grid>
-        </Box>
-      </div> 
-    );
-  } else {
-    return (
-      <Box container="true" m={10} mb={0}>
-        <Typography variant="h5" className={classes.font}>
-          Please Sign Up first
-        </Typography>
-        <Button href="/signup" color="primary" variant="outlined">
-          Sign Up
-        </Button>
-      </Box>
+        </Box> */}
+      </div>
     );
   }
 }
