@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
+// import { makeStyles } from "@material-ui/core/styles";
 // import * as firebase from "firebase";
 // import Grid from "@material-ui/core/Grid";
 // import TextField from "@material-ui/core/TextField";
@@ -12,7 +12,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
-import { Link as LinkTo } from "react-router-dom";
+// import { Link as LinkTo } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useUser } from "reactfire";
 
