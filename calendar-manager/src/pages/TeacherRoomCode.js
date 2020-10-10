@@ -11,7 +11,7 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-
+import Box from "@material-ui/core/Box";
 import { useFirestore, useUser, useFirestoreDocData } from "reactfire";
 
 import Dialog from "@material-ui/core/Dialog";
@@ -19,6 +19,13 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
+
+const useStyles = makeStyles({
+    root: {
+      color: "#5e548e",
+      background: "#E0B1CB",
+    },
+  });
 
 function TeacherRoomCode() {
   const [open, setOpen] = React.useState(false);
@@ -30,13 +37,7 @@ function TeacherRoomCode() {
   const classes = useFirestoreDocData(
     useFirestore().collection("users").doc(uid)
   ).classCodes;
-
-  const useStyles = makeStyles({
-    root: {
-      color: "#5e548e",
-      background: "#E0B1CB",
-    },
-  });
+  const styles = useStyles();
 
   const firestore = useFirestore();
   const addClass = () => {
@@ -87,49 +88,61 @@ function TeacherRoomCode() {
       </DialogActions>
     </Dialog>
   );
-
-  return (
-    <>
-      <Navbar styles={{position:'absolute'}}/>
-      <div className="bg">
-        <div>
-          <Grid container spacing={5}>
-            <Grid item className="cont">
-              <div className="paper_list">
-                <Typography variant="h5" style={{ color: "#E0B1CB" }}>
-                  <b>CLASSROOMS:</b>
-                </Typography>
-                <Paper>
-                  <List className="ov" component="nav" aria-label="classNames">
-                    {classes.map((name) => (
-                      <ListItem button>
-                        <ListItemText primary={name.name + " / " + name.code} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Paper>
-              </div>
+  if (user) {
+    return (
+      <>
+        <Navbar styles={{position:'absolute'}}/>
+        <div className="bg">
+          <div>
+            <Grid container spacing={5}>
+              <Grid item className="cont">
+                <div className="paper_list">
+                  <Typography variant="h5" style={{ color: "#E0B1CB" }}>
+                    <b>CLASSROOMS:</b>
+                  </Typography>
+                  <Paper>
+                    <List className="ov" component="nav" aria-label="classNames">
+                      {classes.map((name) => (
+                        <ListItem button>
+                          <ListItemText primary={name.name + " / " + name.code} />
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Paper>
+                </div>
+              </Grid>
+              <Grid item className="cont">
+                <div className="paper_button">
+                  <img src={require("../assets/classroom.svg")} />
+                  <Button
+                    variant="contained"
+                    disableElevation
+                    className={styles.root}
+                    onClick={() => setOpen(true)}
+                  >
+                    <b>NEW</b>
+                  </Button>
+                </div>
+              </Grid>
             </Grid>
-            <Grid item className="cont">
-              <div className="paper_button">
-                <img src={require("../assets/classroom.svg")} />
-                <Button
-                  variant="contained"
-                  disableElevation
-                  className={useStyles().root}
-                  onClick={() => setOpen(true)}
-                >
-                  <b>NEW</b>
-                </Button>
-              </div>
-            </Grid>
-          </Grid>
 
-          {dia}
+            {dia}
+          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  } else {
+    return (
+      <Box container="true" m={10} mb={0}>
+        <Typography variant="h5">
+          Please Sign Up first
+        </Typography>
+        <Button href="/signup" color="primary" variant="outlined">
+          Sign Up
+        </Button>
+      </Box>
+    );
+  }
 }
 
 export default TeacherRoomCode;
