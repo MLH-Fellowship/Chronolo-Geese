@@ -2,6 +2,7 @@ import React from "react";
 import { useFirestore, useUser, useFirestoreDocData } from "reactfire";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
@@ -9,6 +10,7 @@ import Navbar from "../common/Navbar";
 import Availability from "../profile/Availability";
 import "../styles/Profile.css";
 import { useHistory } from "react-router-dom";
+import { DriveEtaTwoTone } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   classCodes: {
@@ -33,7 +35,7 @@ export default function UserAvailability() {
   );
 
   if (!user) {
-    history.push("/home");
+    history.push("/login");
   } else {
     return (
       <div className="prof_bg">

@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
-import Paper from "@material-ui/core/Paper";
+// import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import { Link as LinkTo } from "react-router-dom";
 import * as firebase from "firebase";
@@ -51,60 +51,60 @@ function Login() {
   };
 
   return (
-    <Box marginLeft={5} marginRight={5}>
-      <Grid
-        container
-        direction="column"
-        justify="center"
-        alignItems="center"
-        spacing={2}
-        fullWidth
-      >
-        <Grid item xs={12}>
-          <Typography variant="h4">log-in</Typography>
+      <Box marginLeft={5} marginRight={5}>
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+          spacing={2}
+          fullWidth
+        >
+          <Grid item xs={12}>
+            <Typography variant="h4">log-in</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="email"
+              label="email"
+              onChange={(e) => setEmail(e.target.value)}
+              variant="filled"
+              type="email"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="password"
+              label="password"
+              onChange={(e) => setPassword(e.target.value)}
+              variant="filled"
+              type="password"
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              onClick={() => submit()}
+              variant="contained"
+              color="primary"
+              type="submit"
+              fullWidth
+            >
+              Submit
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <LinkTo to="/signup">
+              <Link component="button" variant="body2">
+                Sign Up Instead
+              </Link>
+            </LinkTo>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h6">{error}</Typography>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="email"
-            label="email"
-            onChange={(e) => setEmail(e.target.value)}
-            variant="filled"
-            type="email"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="password"
-            label="password"
-            onChange={(e) => setPassword(e.target.value)}
-            variant="filled"
-            type="password"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            onClick={() => submit()}
-            variant="contained"
-            color="primary"
-            type="submit"
-            fullWidth
-          >
-            Submit
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <LinkTo to="/signup">
-            <Link component="button" variant="body2">
-              Sign Up Instead
-            </Link>
-          </LinkTo>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h6">{error}</Typography>
-        </Grid>
-      </Grid>
-    </Box>
+        </Box>
   );
 }
 
