@@ -38,20 +38,10 @@ const useStyles = makeStyles((theme) => ({
  * @return {ReactElement} Displays profile page
  */
 export default function Home() {
-  const [link, setLink] = React.useState("Sign Up Instead");
   const [login, setLogin] = React.useState(true);
   const user = useUser();
   const classes = useStyles();
   const history = useHistory();
-
-  // used to switch between login and signup components
-  let menu = <div></div>;
-
-  // to switch between login and signup components
-  if (!user) {
-    if (login) menu = <Login />;
-    else menu = <SignUp />;
-  }
 
   // logs the user out
   const logout = () => {
@@ -62,17 +52,6 @@ export default function Home() {
       .catch(function (error) {
         console.log(error);
       });
-  };
-
-  // allows the user to toggle between signup and login
-  const toggle = () => {
-    if (login) {
-      setLink("Log In Instead");
-      setLogin(false);
-    } else {
-      setLink("Sign Up Instead");
-      setLogin(true);
-    }
   };
 
   // CASE: user not logged in
@@ -87,10 +66,11 @@ export default function Home() {
           spacing={2}
           fullWidth
         >
-          {menu}
+          {login ? <Login /> : <SignUp />}
+          
           <Grid item xs={12}>
-            <Link onClick={toggle} component="button" variant="body2">
-              {link}
+            <Link onClick={() => setLogin(!login)} component="button" variant="body2">
+              {login ? "Sign In Instead" : "Log In Instead"}
             </Link>
           </Grid>
         </Grid>
@@ -130,7 +110,9 @@ export default function Home() {
               </div>
             </Grid>
             <Grid item>
-              {!user ? (notUser) : (
+              {!user ? (
+                notUser
+              ) : (
                 // logout button
                 <Button
                   onClick={() => logout()}

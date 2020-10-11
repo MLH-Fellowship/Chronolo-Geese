@@ -50,7 +50,7 @@ function Login() {
   return (
     <>
       <Grid item xs={12}>
-        <Typography variant="h4">log-in</Typography>
+        <Typography variant="h5">log-in</Typography>
       </Grid>
       <Grid item xs={12}>
         <TextField

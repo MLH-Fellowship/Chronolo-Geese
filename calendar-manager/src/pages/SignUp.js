@@ -82,7 +82,7 @@ function SignUp() {
   return (
     <>
       <Grid item>
-        <Typography variant="h4">sign-up</Typography>
+        <Typography variant="h5">sign-up</Typography>
       </Grid>
       <Grid item xs={12}>
         <TextField
