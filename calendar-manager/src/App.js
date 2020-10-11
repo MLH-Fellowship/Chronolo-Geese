@@ -7,7 +7,7 @@ import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import UserAvailability from "./pages/UserAvailability";
 import { FirebaseAppProvider } from "reactfire";
-import TeacherRoomCode from "./pages/TeacherRoomCode";
+import Classrooms from "./pages/Classrooms";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -38,7 +38,7 @@ function App() {
               <UserAvailability />
             </Route>
             <Route exact path="/myclasses/:uid">
-              <TeacherRoomCode />
+              <Classrooms />
             </Route>
             <Route path="/">
               <Home />

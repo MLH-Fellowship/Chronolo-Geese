@@ -14,6 +14,11 @@ export default function Navbar() {
   const history = useHistory();
   const user = useUser();
 
+  
+  if (!user) {
+    return (<></>)
+  }
+
   return (
     <AppBar
       style={{ background: "transparent", boxShadow: "none" }}

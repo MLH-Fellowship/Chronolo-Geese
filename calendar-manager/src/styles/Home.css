@@ -6,8 +6,16 @@
   justify-content: center;
 }
 
-.left {
-  width: 40wh; 
-  padding-top: 7vh;
+.left3 {
+  width: 40wh;
 }
 
+.left {
+  width: 40wh;
+  position: relative;
+  top: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
