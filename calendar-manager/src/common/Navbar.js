@@ -21,10 +21,12 @@ export default function Navbar() {
   const user = useUser();
 
   return (
-    <AppBar style={{ background: 'transparent', boxShadow: 'none'}} position="absolute">
+    <AppBar
+      style={{ background: "transparent", boxShadow: "none" }}
+      position="absolute"
+    >
       <Toolbar>
-        <Typography variant="h6" style={{ flexGrow: 1 }}>
-        </Typography>
+        <Typography variant="h6" style={{ flexGrow: 1 }}></Typography>
         <Button href="/home" color="inherit">
           Home
         </Button>
@@ -32,7 +34,7 @@ export default function Navbar() {
           Classrooms
         </Button>
         <Button href="/avalibility" color="inherit">
-          Avalibility
+          Availability
         </Button>
         <IconButton
           aria-label="account of current user"

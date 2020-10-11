@@ -12,7 +12,11 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Box from "@material-ui/core/Box";
-import { useFirestore, useUser, useFirestoreDocData as setFirestoreDocData } from "reactfire";
+import {
+  useFirestore,
+  useUser,
+  useFirestoreDocData as setFirestoreDocData,
+} from "reactfire";
 import { useHistory } from "react-router-dom";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -68,10 +72,11 @@ function Classrooms() {
   };
 
   const joinClass = () => {
-    
-    const joinedClass = setFirestoreDocData(firestore.collection("classes").doc("rt3hJWsoBSsq5BDsbmUD"))
+    const joinedClass = setFirestoreDocData(
+      firestore.collection("classes").doc("rt3hJWsoBSsq5BDsbmUD")
+    );
 
-    console.log(joinedClass)
+    console.log(joinedClass);
 
     // firestore
     //   .collection("classes").doc(classId)

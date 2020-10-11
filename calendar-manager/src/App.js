@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import React, { Suspense } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 import Login from "./pages/Login";
@@ -19,7 +19,7 @@ const firebaseConfig = {
   storageBucket: "chronolo-geese.appspot.com",
   messagingSenderId: "538915612147",
   appId: "1:538915612147:web:2264447c48c615794f5e86",
-  measurementId: "G-0F8Q557ERB"
+  measurementId: "G-0F8Q557ERB",
 };
 
 function App() {
@@ -28,12 +28,6 @@ function App() {
       <Suspense fallback={<p>loading...</p>}>
         <Router>
           <Switch>
-            <Route path="/signup">
-              <SignUp />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
             <Route path="/home">
               <Home />
             </Route>
@@ -47,7 +41,7 @@ function App() {
               <Classrooms />
             </Route>
             <Route path="/">
-              <Login />
+              <Home />
             </Route>
           </Switch>
         </Router>

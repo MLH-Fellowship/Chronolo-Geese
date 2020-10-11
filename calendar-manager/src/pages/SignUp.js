@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 // import { makeStyles } from '@material-ui/core/styles';
 import * as firebase from "firebase";
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
-import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+} from "@material-ui/core";
 // import { AccountCircle } from '@material-ui/icons';
 import { Link as LinkTo } from "react-router-dom";
-import {useHistory, Redirect} from 'react-router-dom';
-import {
-  useFirestore,
-} from 'reactfire';
+import { useHistory, Redirect } from "react-router-dom";
+import { useFirestore } from "reactfire";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -20,7 +24,7 @@ function SignUp() {
   const [checked, setChecked] = useState(false);
   const [password, setPassword] = useState("");
   const history = useHistory();
-  const userCollection = useFirestore().collection('users');
+  const userCollection = useFirestore().collection("users");
 
   const firebaseConfig = {
     apiKey: "AIzaSyAE6rcfe2QjFdVwwVtQN6dvEITo4mFgVPg",
@@ -52,32 +56,35 @@ function SignUp() {
         setError(error.message);
         // return;
       });
-      firebase.auth().onAuthStateChanged(async function(user) {
-        if (user) {
-            await userCollection.doc(user.uid).get().then((doc) => {
-              if (!doc.exists) {
-                userCollection.doc(user.uid).set({
-                  displayName: username,
-                  availability: [],
-                  classCodes: [],
-                  email: user.email,
-                  isStudent: !checked,
-                  uid: user.uid,
-                });
-              }
-            }).catch(function(error) {
-              console.log('Error getting document:', error);
-            });
-        } else {
-            // No user is signed in.
-            console.log('There is no logged in user');
-        }
+    firebase.auth().onAuthStateChanged(async function (user) {
+      if (user) {
+        await userCollection
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+            if (!doc.exists) {
+              userCollection.doc(user.uid).set({
+                displayName: username,
+                availability: [],
+                classCodes: [],
+                email: user.email,
+                isStudent: !checked,
+                uid: user.uid,
+              });
+            }
+          })
+          .catch(function (error) {
+            console.log("Error getting document:", error);
+          });
+      } else {
+        // No user is signed in.
+        console.log("There is no logged in user");
+      }
     });
   };
 
-
   return (
-    <div> 
+    <div>
       <Grid
         container
         fullWidth
@@ -128,12 +135,12 @@ function SignUp() {
             />
           </Grid>
           <Grid item xs={12}>
-          <Checkbox
-            checked={checked}
-            onChange={(e) => setChecked(e.target.checked)}
-            inputProps={{ 'aria-label': 'primary checkbox' }}
-          />
-          Are you a professor?
+            <Checkbox
+              checked={checked}
+              onChange={(e) => setChecked(e.target.checked)}
+              inputProps={{ "aria-label": "primary checkbox" }}
+            />
+            Are you a professor?
           </Grid>
           {/* <Grid item xs={12}>
             <TextField
