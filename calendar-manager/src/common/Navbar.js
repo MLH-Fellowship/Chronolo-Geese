@@ -32,9 +32,6 @@ export default function Navbar() {
         <Button href={"/myclasses/" + user.uid} color="inherit">
           My Classrooms
         </Button>
-        <Button href={"/availability/" + user.uid} color="inherit">
-          My Availability
-        </Button>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
