@@ -12,8 +12,8 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Box from "@material-ui/core/Box";
-import { useFirestore, useUser, useFirestoreDocData } from "reactfire";
-
+import { useFirestore, useUser, useFirestoreDocData as setFirestoreDocData } from "reactfire";
+import { useHistory } from "react-router-dom";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -21,25 +21,31 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles({
-    root: {
-      color: "#5e548e",
-      background: "#E0B1CB",
-    },
-  });
+  root: {
+    color: "#5e548e",
+    background: "#E0B1CB",
+    margin: "10px",
+  },
+});
 
-function TeacherRoomCode() {
-  const [open, setOpen] = React.useState(false);
+function Classrooms() {
+  const [open, setOpen] = React.useState(false); //open dialog to create a new class
   const [className, setClassName] = React.useState("");
+  const [openJoin, setOpenJoin] = React.useState(false); //open dialog to join a class
+  const [classId, setClassId] = React.useState("");
 
+  const history = useHistory();
   const user = useUser();
   const { uid } = useParams();
 
-  const classes = useFirestoreDocData(
+  const classes = setFirestoreDocData(
     useFirestore().collection("users").doc(uid)
   ).classCodes;
+
   const styles = useStyles();
 
   const firestore = useFirestore();
+
   const addClass = () => {
     let id = "";
     firestore
@@ -55,13 +61,31 @@ function TeacherRoomCode() {
           .collection("users")
           .doc(uid)
           .update({
-            classCodes: classes.concat({code: id, name: className}),
+            classCodes: classes.concat({ code: id, name: className }),
           });
       });
     setOpen(false);
   };
 
-  let dia = (
+  const joinClass = () => {
+    
+    const joinedClass = setFirestoreDocData(firestore.collection("classes").doc("rt3hJWsoBSsq5BDsbmUD"))
+
+    console.log(joinedClass)
+
+    // firestore
+    //   .collection("classes").doc(classId)
+    //   .update({students: joinedClass.students.concat(uid)})
+
+    // firestore
+    //   .collection("users")
+    //   .doc(uid)
+    //   .update({
+    //     classCodes: classes.concat({ code: classId, name: joinedClass.title }),
+    //   });
+  };
+
+  let newDia = (
     <Dialog
       open={open}
       onClose={() => setOpen(false)}
@@ -88,10 +112,39 @@ function TeacherRoomCode() {
       </DialogActions>
     </Dialog>
   );
+
+  let joinDia = (
+    <Dialog
+      open={openJoin}
+      onClose={() => setOpenJoin(false)}
+      aria-labelledby="form-dialog-title"
+    >
+      <DialogTitle id="form-dialog-title">Join a Class</DialogTitle>
+      <DialogContent>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Class Code"
+          onChange={(e) => setClassId(e.target.value)}
+          fullWidth
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setOpenJoin(false)} color="primary">
+          Cancel
+        </Button>
+        <Button onClick={() => joinClass()} color="primary">
+          Join Room
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+
   if (user) {
     return (
       <>
-        <Navbar styles={{position:'absolute'}}/>
+        <Navbar styles={{ position: "absolute" }} />
         <div className="bg">
           <div>
             <Grid container spacing={5}>
@@ -101,10 +154,16 @@ function TeacherRoomCode() {
                     <b>CLASSROOMS:</b>
                   </Typography>
                   <Paper>
-                    <List className="ov" component="nav" aria-label="classNames">
+                    <List
+                      className="ov"
+                      component="nav"
+                      aria-label="classNames"
+                    >
                       {classes.map((name) => (
                         <ListItem button>
-                          <ListItemText primary={name.name + " / " + name.code} />
+                          <ListItemText
+                            primary={name.name + " / " + name.code}
+                          />
                         </ListItem>
                       ))}
                     </List>
@@ -122,27 +181,28 @@ function TeacherRoomCode() {
                   >
                     <b>NEW</b>
                   </Button>
+
+                  <Button
+                    variant="contained"
+                    disableElevation
+                    className={styles.root}
+                    onClick={() => setOpenJoin(true)}
+                  >
+                    <b>JOIN</b>
+                  </Button>
                 </div>
               </Grid>
             </Grid>
 
-            {dia}
+            {newDia}
+            {joinDia}
           </div>
         </div>
       </>
     );
   } else {
-    return (
-      <Box container="true" m={10} mb={0}>
-        <Typography variant="h5">
-          Please Sign Up first
-        </Typography>
-        <Button href="/signup" color="primary" variant="outlined">
-          Sign Up
-        </Button>
-      </Box>
-    );
+    history.push("/home");
   }
 }
 
-export default TeacherRoomCode;
+export default Classrooms;

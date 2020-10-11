@@ -13,8 +13,6 @@ import {
   useFirestore,
 } from 'reactfire';
 
-
-
 function SignUp() {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
