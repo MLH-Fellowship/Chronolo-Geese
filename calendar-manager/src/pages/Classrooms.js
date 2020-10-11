@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../common/Navbar";
 import { useParams } from "react-router-dom";
 
-import "../styles/TeacherRoomCode.css";
+import "../styles/Classrooms.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     },
   });
 
-function TeacherRoomCode() {
+function Classrooms() {
   const [open, setOpen] = React.useState(false);
   const [className, setClassName] = React.useState("");
 
@@ -145,4 +145,4 @@ function TeacherRoomCode() {
   }
 }
 
-export default TeacherRoomCode;
+export default Classrooms;

@@ -14,6 +14,11 @@ export default function Navbar() {
   const history = useHistory();
   const user = useUser();
 
+  
+  if (!user) {
+    return (<></>)
+  }
+
   return (
     <AppBar
       style={{ background: "transparent", boxShadow: "none" }}
@@ -22,7 +27,7 @@ export default function Navbar() {
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}></Typography>
         <Button href={"/home/" + user.uid} color="inherit">
-          Home
+          Log Out
         </Button>
         <Button href={"/myclasses/" + user.uid} color="inherit">
           My Classrooms
