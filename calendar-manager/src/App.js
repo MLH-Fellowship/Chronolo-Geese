@@ -8,7 +8,7 @@ import Profile from "./pages/Profile";
 import UserAvailability from "./pages/UserAvailability";
 import { FirebaseAppProvider } from "reactfire";
 import Classrooms from "./pages/Classrooms";
-import TeacherRoomCode from "./pages/TeacherRoomCode";
+// import TeacherRoomCode from "./pages/TeacherRoomCode";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 

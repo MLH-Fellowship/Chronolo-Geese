@@ -17,6 +17,7 @@ import {
   useUser,
   useFirestoreDocData as setFirestoreDocData,
 } from "reactfire";
+import * as firebase from 'firebase/app';
 import { useHistory } from "react-router-dom";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -42,8 +43,10 @@ function Classrooms() {
   const user = useUser();
   const { uid } = useParams();
 
+  const classesCollection = useFirestore().collection('classes');
+  const usersCollection = useFirestore().collection('users');
   const classes = setFirestoreDocData(
-    useFirestore().collection("users").doc(uid)
+    usersCollection.doc(uid)
   ).classCodes;
 
   const styles = useStyles();
@@ -61,8 +64,7 @@ function Classrooms() {
       })
       .then((pushed_user) => {
         id = pushed_user.w_.path.segments[1];
-        firestore
-          .collection("users")
+        usersCollection
           .doc(uid)
           .update({
             classCodes: classes.concat({ code: id, name: className }),
@@ -72,22 +74,26 @@ function Classrooms() {
   };
 
   const joinClass = () => {
-    const joinedClass = setFirestoreDocData(
-      firestore.collection("classes").doc("rt3hJWsoBSsq5BDsbmUD")
-    );
-
-    console.log(joinedClass);
-
-    // firestore
-    //   .collection("classes").doc(classId)
-    //   .update({students: joinedClass.students.concat(uid)})
-
-    // firestore
-    //   .collection("users")
-    //   .doc(uid)
-    //   .update({
-    //     classCodes: classes.concat({ code: classId, name: joinedClass.title }),
-    //   });
+    // let className;
+    const docRef = classesCollection.doc(classId);
+    docRef.get().then(function(doc) {
+      if (doc.exists) {
+        console.log(doc.data());
+        // className = doc.data().title;
+        docRef.update({
+          students:firebase.firestore.FieldValue.arrayUnion(uid),
+        });
+      usersCollection.doc(user.uid).update({
+        classCodes:firebase.firestore.FieldValue.arrayUnion({
+          code: classId,
+          name: doc.data().title,
+        }),
+      });
+      }
+    }).catch(function(error) {
+      console.log('Error getting document:', error);
+    });
+    setOpen(false);
   };
 
   let newDia = (

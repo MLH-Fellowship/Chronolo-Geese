@@ -21,23 +21,14 @@ export default function Navbar() {
     >
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}></Typography>
-<<<<<<< HEAD
-        <Button href="/home" color="inherit">
-=======
         <Button href={"/home/" + user.uid} color="inherit">
->>>>>>> main
           Home
         </Button>
         <Button href={"/myclasses/" + user.uid} color="inherit">
           My Classrooms
         </Button>
-<<<<<<< HEAD
-        <Button href="/avalibility" color="inherit">
-          Availability
-=======
         <Button href={"/availability/" + user.uid} color="inherit">
           My Availability
->>>>>>> main
         </Button>
         <IconButton
           aria-label="account of current user"
