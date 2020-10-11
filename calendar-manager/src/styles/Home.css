@@ -7,11 +7,7 @@
 }
 
 .left {
-  padding: 20px;
-  width: 50vw;
+  width: 40wh; 
+  padding-top: 7vh;
 }
 
-.cont {
-  margin-left: 10%;
-  margin-right: 10%;
-}

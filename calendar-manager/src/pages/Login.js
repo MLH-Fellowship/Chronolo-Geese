@@ -5,9 +5,11 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import Box from "@material-ui/core/Box";
 import { Link as LinkTo } from "react-router-dom";
 import * as firebase from "firebase";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 function Login() {
   const [error, setError] = useState("");
@@ -31,14 +33,14 @@ function Login() {
     firebase.initializeApp(firebaseConfig);
   }
 
-  //we can prolly combine the login/signup form tog.... reduce code. 
-  // TODO 
+  //we can prolly combine the login/signup form tog.... reduce code.
+  // TODO
   let submit = () => {
     // console.log(email, password);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((res) => history.push("/classes/" + res.user.uid))
+      .then((res) => history.push("/myclasses/" + res.user.uid))
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -49,61 +51,60 @@ function Login() {
   };
 
   return (
-    <div>
-      <Grid
-        container
-        fullWidth
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ paddingTop: "15%" }}
-      >
+      <Box marginLeft={5} marginRight={5}>
         <Grid
           container
           direction="column"
           justify="center"
           alignItems="center"
           spacing={2}
+          fullWidth
         >
-          <Grid item>
-            <Typography variant="h4">Log In</Typography>
+          <Grid item xs={12}>
+            <Typography variant="h4">log-in</Typography>
           </Grid>
-          <Grid>
+          <Grid item xs={12}>
             <TextField
-              fullWidth
               id="email"
               label="email"
               onChange={(e) => setEmail(e.target.value)}
-              variant="outlined"
+              variant="filled"
               type="email"
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              fullWidth
               id="password"
               label="password"
               onChange={(e) => setPassword(e.target.value)}
-              variant="outlined"
+              variant="filled"
               type="password"
+              fullWidth
             />
           </Grid>
-          <Grid item>
-            <Button onClick={() => submit()} variant="contained" color="primary" type="submit">
+          <Grid item xs={12}>
+            <Button
+              onClick={() => submit()}
+              variant="contained"
+              color="primary"
+              type="submit"
+              fullWidth
+            >
               Submit
             </Button>
           </Grid>
-
-          <LinkTo to="/signup">
-          <Link component="button" variant="body2">
-            Sign Up Instead
-          </Link>
-          </LinkTo>
+          <Grid item xs={12}>
+            <LinkTo to="/signup">
+              <Link component="button" variant="body2">
+                Sign Up Instead
+              </Link>
+            </LinkTo>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h6">{error}</Typography>
+          </Grid>
         </Grid>
-        <Typography variant="h6">{error}</Typography>
-      </Grid>
-    </div>
+        </Box>
   );
 }
 

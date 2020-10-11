@@ -1,9 +1,4 @@
 import React from "react";
-// import { makeStyles } from "@material-ui/core/styles";
-// import * as firebase from "firebase";
-// import Grid from "@material-ui/core/Grid";
-// import TextField from "@material-ui/core/TextField";
-// import Link from "@material-ui/core/Link";
 import {
   AppBar,
   Toolbar,
@@ -12,7 +7,6 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
-// import { Link as LinkTo } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useUser } from "reactfire";
 
@@ -21,18 +15,20 @@ export default function Navbar() {
   const user = useUser();
 
   return (
-    <AppBar style={{ background: 'transparent', boxShadow: 'none'}} position="absolute">
+    <AppBar
+      style={{ background: "transparent", boxShadow: "none" }}
+      position="absolute"
+    >
       <Toolbar>
-        <Typography variant="h6" style={{ flexGrow: 1 }}>
-        </Typography>
-        <Button href="/home" color="inherit">
+        <Typography variant="h6" style={{ flexGrow: 1 }}></Typography>
+        <Button href={"/home/" + user.uid} color="inherit">
           Home
         </Button>
-        <Button href={"/classes/" + user.uid} color="inherit">
-          Classrooms
+        <Button href={"/myclasses/" + user.uid} color="inherit">
+          My Classrooms
         </Button>
-        <Button href="/avalibility" color="inherit">
-          Avalibility
+        <Button href={"/availability/" + user.uid} color="inherit">
+          My Availability
         </Button>
         <IconButton
           aria-label="account of current user"
