@@ -21,7 +21,6 @@ function SignUp() {
   const userCollection = useFirestore().collection("users");
   const dotenv = require("dotenv");
   const env = dotenv.config().parse;
-const classes = useStyles();
 
   if (!firebase.apps.length) {
     firebase.initializeApp(env);
@@ -38,6 +37,8 @@ const classes = useStyles();
       textAlign: "center",
     },
   }));
+
+  const classes = useStyles();
 
   // sign user up
   let submit = async () => {
