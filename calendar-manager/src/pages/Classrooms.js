@@ -88,6 +88,7 @@ function Classrooms() {
       </DialogActions>
     </Dialog>
   );
+  
   if (user) {
     return (
       <>

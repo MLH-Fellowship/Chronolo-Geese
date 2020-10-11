@@ -46,7 +46,6 @@ function SignUp() {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((res) => history.push("/home"))
       .catch(function (error) {
         // Handle Errors here.
         setError(error.message);
@@ -69,6 +68,7 @@ function SignUp() {
               });
             }
           })
+          .then(res =>  history.push("/availability/" + user.uid))
           .catch(function (error) {
             console.log("Error getting document:", error);
           });
