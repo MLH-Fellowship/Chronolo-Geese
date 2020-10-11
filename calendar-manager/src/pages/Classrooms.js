@@ -60,7 +60,7 @@ function Classrooms() {
       .add({
         title: className,
         professors: [uid],
-        students: [],
+        students: [uid],
       })
       .then((pushed_user) => {
         id = pushed_user.w_.path.segments[1];
@@ -93,7 +93,7 @@ function Classrooms() {
     }).catch(function(error) {
       console.log('Error getting document:', error);
     });
-    setOpen(false);
+    setOpenJoin(false);
   };
 
   let newDia = (
