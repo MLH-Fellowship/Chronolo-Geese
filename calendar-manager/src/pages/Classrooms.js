@@ -11,14 +11,14 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Box from "@material-ui/core/Box";
 
 import {
   useFirestore,
   useUser,
   useFirestoreDocData as setFirestoreDocData,
 } from "reactfire";
-import * as firebase from 'firebase/app';
+
+import * as firebase from "firebase/app";
 import { useHistory } from "react-router-dom";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -38,17 +38,15 @@ function Classrooms() {
   const [open, setOpen] = React.useState(false); //open dialog to create a new class
   const [className, setClassName] = React.useState("");
   const [openJoin, setOpenJoin] = React.useState(false); //open dialog to join a class
-  const [classId, setClassId] = React.useState("");
+  const [classId, setClassId] = React.useState("temp");
 
   const history = useHistory();
   const user = useUser();
   const { uid } = useParams();
 
-  const classesCollection = useFirestore().collection('classes');
-  const usersCollection = useFirestore().collection('users');
-  const classes = setFirestoreDocData(
-    usersCollection.doc(uid)
-  ).classCodes;
+  const classesCollection = useFirestore().collection("classes");
+  const usersCollection = useFirestore().collection("users");
+  const classes = setFirestoreDocData(usersCollection.doc(uid)).classCodes;
 
   const styles = useStyles();
 
@@ -65,35 +63,34 @@ function Classrooms() {
       })
       .then((pushed_user) => {
         id = pushed_user.w_.path.segments[1];
-        usersCollection
-          .doc(uid)
-          .update({
-            classCodes: classes.concat({ code: id, name: className }),
-          });
+        usersCollection.doc(uid).update({
+          classCodes: classes.concat({ code: id, name: className }),
+        });
       });
     setOpen(false);
   };
 
   const joinClass = () => {
-    // let className;
     const docRef = classesCollection.doc(classId);
-    docRef.get().then(function(doc) {
-      if (doc.exists) {
-        console.log(doc.data());
-        // className = doc.data().title;
-        docRef.update({
-          students:firebase.firestore.FieldValue.arrayUnion(uid),
-        });
-      usersCollection.doc(user.uid).update({
-        classCodes:firebase.firestore.FieldValue.arrayUnion({
-          code: classId,
-          name: doc.data().title,
-        }),
+    docRef
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          console.log(doc.data());
+          docRef.update({
+            students: firebase.firestore.FieldValue.arrayUnion(uid),
+          });
+          usersCollection.doc(user.uid).update({
+            classCodes: firebase.firestore.FieldValue.arrayUnion({
+              code: classId,
+              name: doc.data().title,
+            }),
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
       });
-      }
-    }).catch(function(error) {
-      console.log('Error getting document:', error);
-    });
     setOpenJoin(false);
   };
 
@@ -166,10 +163,16 @@ function Classrooms() {
                     <b>CLASSROOMS:</b>
                   </Typography>
                   <Paper>
-                    <List className="ov" component="nav" aria-label="classNames">
+                    <List
+                      className="ov"
+                      component="nav"
+                      aria-label="classNames"
+                    >
                       {classes.map((name) => (
                         <ListItem button>
-                          <ListItemText primary={name.name + " / " + name.code} />
+                          <ListItemText
+                            primary={name.name + " / " + name.code}
+                          />
                         </ListItem>
                       ))}
                     </List>
@@ -206,6 +209,7 @@ function Classrooms() {
     );
   } else {
     history.push("/home");
+  }
 }
 
 export default Classrooms;
