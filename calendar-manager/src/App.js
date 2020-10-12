@@ -1,15 +1,14 @@
 import React, { Suspense } from "react";
-// import logo from "./logo.svg";
+
 import "./App.css";
-import Login from "./pages/Login";
+
 import Home from "./pages/Home";
-import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import UserAvailability from "./pages/UserAvailability";
 import { FirebaseAppProvider } from "reactfire";
 import Classrooms from "./pages/Classrooms";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAE6rcfe2QjFdVwwVtQN6dvEITo4mFgVPg",

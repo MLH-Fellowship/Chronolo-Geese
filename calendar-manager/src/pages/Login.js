@@ -68,7 +68,6 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           variant="outlined"
           type="password"
-          fullWidth
         />
       </Grid>
       <Grid item xs={12}>
@@ -77,7 +76,6 @@ function Login() {
           variant="contained"
           color="primary"
           type="submit"
-          fullWidth
         >
           Submit
         </Button>

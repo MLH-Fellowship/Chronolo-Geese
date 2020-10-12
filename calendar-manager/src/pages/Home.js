@@ -1,6 +1,14 @@
 import React from "react";
 import Sky from "react-sky";
 
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
+
 import { useHistory } from "react-router-dom";
 
 import * as firebase from "firebase";
@@ -9,15 +17,7 @@ import { useUser } from "reactfire";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Navbar from "../common/Navbar";
-
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
 import "../styles/Home.css";
-import Link from "@material-ui/core/Link";
 
 import i1 from "../assets/clock.png";
 import i2 from "../assets/timetable.png";
@@ -64,12 +64,15 @@ export default function Home() {
           justify="center"
           alignItems="center"
           spacing={2}
-          fullWidth
         >
           {login ? <Login /> : <SignUp />}
-          
+
           <Grid item xs={12}>
-            <Link onClick={() => setLogin(!login)} component="button" variant="body2">
+            <Link
+              onClick={() => setLogin(!login)}
+              component="button"
+              variant="body2"
+            >
               {login ? "Sign In Instead" : "Log In Instead"}
             </Link>
           </Grid>
