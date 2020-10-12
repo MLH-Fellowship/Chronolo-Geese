@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import Navbar from "../common/Navbar";
-import { useParams } from "react-router-dom";
+import React from "react";
 
-import "../styles/Classrooms.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -11,6 +8,11 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
 
 import {
   useFirestore,
@@ -19,12 +21,10 @@ import {
 } from "reactfire";
 
 import * as firebase from "firebase/app";
-import { useHistory } from "react-router-dom";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
+
+import Navbar from "../common/Navbar";
+import "../styles/Classrooms.css";
+import { useParams, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -52,7 +52,7 @@ function Classrooms() {
 
   const firestore = useFirestore();
 
-  if(!user){
+  if (!user) {
     history.push("/home");
   }
 
@@ -154,62 +154,56 @@ function Classrooms() {
     </Dialog>
   );
 
-    return (
-      <>
-        <Navbar styles={{ position: "absolute" }} />
-        <div className="bg">
-          <div>
-            <Grid container spacing={5}>
-              <Grid item className="cont">
-                <div className="paper_list">
-                  <Typography variant="h5" style={{ color: "#E0B1CB" }}>
-                    <b>CLASSROOMS:</b>
-                  </Typography>
-                  <Paper>
-                    <List
-                      className="ov"
-                      component="nav"
-                      aria-label="classNames"
-                    >
-                      {classes.map((name) => (
-                        <ListItem button>
-                          <ListItemText
-                            primary={name.name + " / " + name.code}
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Paper>
-                </div>
-              </Grid>
-              <Grid item className="cont">
-                <div className="paper_button">
-                  <img src={require("../assets/classroom.svg")} />
-                  <Button
-                    variant="contained"
-                    disableElevation
-                    className={styles.root}
-                    onClick={() => setOpen(true)}
-                  >
-                    <b>NEW</b>
-                  </Button>
-                  <Button
-                    variant="contained"
-                    disableElevation
-                    className={styles.root}
-                    onClick={() => setOpenJoin(true)}
-                  >
-                    <b>JOIN</b>
-                  </Button>
-                </div>
-              </Grid>
+  return (
+    <>
+      <Navbar styles={{ position: "absolute" }} />
+      <div className="bg">
+        <div>
+          <Grid container spacing={5}>
+            <Grid item className="cont">
+              <div className="paper_list">
+                <Typography variant="h5" style={{ color: "#E0B1CB" }}>
+                  <b>CLASSROOMS:</b>
+                </Typography>
+                <Paper>
+                  <List className="ov" component="nav" aria-label="classNames">
+                    {classes.map((name) => (
+                      <ListItem button>
+                        <ListItemText primary={name.name + " / " + name.code} />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Paper>
+              </div>
             </Grid>
-            {newDia}
-            {joinDia}
-          </div>
+            <Grid item className="cont">
+              <div className="paper_button">
+                <img alt="classroom-logo" src={require("../assets/classroom.svg")} />
+                <Button
+                  variant="contained"
+                  disableElevation
+                  className={styles.root}
+                  onClick={() => setOpen(true)}
+                >
+                  <b>NEW</b>
+                </Button>
+                <Button
+                  variant="contained"
+                  disableElevation
+                  className={styles.root}
+                  onClick={() => setOpenJoin(true)}
+                >
+                  <b>JOIN</b>
+                </Button>
+              </div>
+            </Grid>
+          </Grid>
+          {newDia}
+          {joinDia}
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
 }
 
 export default Classrooms;
