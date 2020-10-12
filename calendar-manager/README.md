@@ -9,9 +9,7 @@ Chronolo-Geese is the best schedule conflict manager for students. It is a simpl
 ![Schedule](https://u.cubeupload.com/cdalangin/5daScreenshot2020101200.jpg)
 
 ## Motivation
-It can be a challenge to agree on a specific time to meet up and collaborate on a school project, especially since everything is virtual now. Just as we were working on this project, it was a challenge for us to meet up with our varying schedules. We were hoping that this app would help with that issue, and at the same time be useful
-
-This app will make the process easier because the heat map will visualize everyone's availability. The darker the color, the 
+It can be a challenge to agree on a specific time to meet up and collaborate on a school project, especially since everything is virtual now. Just as we were working on this project, it was a challenge for us to meet up with our varying schedules. We were hoping that this app would help with that issue, and become just as useful for all the students trying to adjust to the virtual school set up. 
 
 ## Mockup
 ![Landing](https://u.cubeupload.com/cdalangin/Screenshot2020101200.jpg)
