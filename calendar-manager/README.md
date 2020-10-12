@@ -22,6 +22,8 @@ It can be a challenge to agree on a specific time to meet up and collaborate on 
 - [React Schedule Tracker](https://github.com/bibekg/react-schedule-selector) for the availability tracker
 - [Sky](https://github.com/lucagez/sky) for the animations in the landing page
 
+## [Try it here!](https://chronolo-geese.web.app/)
+
 ## Made with ❤️ by:
 | Cirill Dalangin | Clara Chick | Pablo Domínguez Durán | Shiyue Zhang |
 | :----: | :---: | :---: | :---: |
