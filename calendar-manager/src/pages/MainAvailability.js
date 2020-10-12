@@ -193,7 +193,9 @@ export default function MainAvailability() {
                   fontFamily: "sans-serif",
                 }}
               >
-                {heatmap}
+                <Paper className={classes.paperBg} variant="outlined">
+                  {heatmap}
+                </Paper>
               </div>
             </Grid>
           </Grid>
