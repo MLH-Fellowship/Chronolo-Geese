@@ -67,7 +67,7 @@ export default function Availability({ uid }) {
         maxTime={22}
         hourlyChunks={2}
         timeFormat="h:mm A"
-        dateFormat="ddd"
+        dateFormat="ddd, MMM. DD"
         unselectedColor="#fff7ff"
         hoveredColor="#9F86C0"
         selectedColor="#5E548E"
