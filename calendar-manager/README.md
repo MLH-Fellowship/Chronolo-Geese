@@ -1,68 +1,20 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Chronolo-geese
 
-## Available Scripts
+Git organized. Git on time. 
 
-In the project directory, you can run:
+Chronolo-Geese is the best schedule conflict manager for students. It is a simple and intuitive to let your classmates know what time you're available to hang out, meet up 
 
-### `npm start`
+### Motivation
+It can be a challenge to figure out what time to meet up and collaborate on a school project, especially since everything is virtual now. 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[Image](https://user-images.githubusercontent.com/50504825/95670081-6801b480-0b55-11eb-8fa5-c4397c20ed60.png)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+### Build Status
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### References
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### Contributors
+| Cirill Dalangin | Clara Chick | Pablo Domínguez Durán | Shiyue Zhang |
+| ---- | --- | --- | ---|
+| [<img src="https://avatars2.githubusercontent.com/u/40480780?s=460&u=8c1edf8c533e2fb0a97dfce1342fcf2960a12c1b&v=4" width="100px;"/><br /><sub><b>Cirill Dalangin</b></sub>](https://florenz.tech/)<br />[🌍](https://florenz.tech/) [💻](https://github.com/cdalangin) [🤝](https://www.linkedin.com/in/cfdalangin/) | [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQE8eYc0h_TPHg/profile-displayphoto-shrink_400_400/0?e=1608163200&v=beta&t=NVP7R8UDoVRYASyL6KgpzKFs9P9fgPYGYeuRiN86r_k" width="100px;"/><br /><sub><b>Clara Chick</b></sub>](https://clarachick.me/)<br />[🌍](https://clarachick.me/) [💻](https://github.com/KohinaTheCat) [🤝](https://www.linkedin.com/in/clarachick/) | [<img src="https://avatars2.githubusercontent.com/u/10246682?s=460&u=10d50fc5c9b71bfadb3927ebf2325250a520455a&v=4" width="100px;"/><br /><sub><b>Pablo Domínguez Durán</b></sub>](https://github.com/pablomdd)<br /> [💻](https://github.com/pablomdd) [🤝](https://www.linkedin.com/in/pablodominguezduran/) | [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQGFk_sA35kT-A/profile-displayphoto-shrink_400_400/0?e=1608163200&v=beta&t=_ZhIt1aPDDYj305ovVS_fAkPe_IKCW_ysY7JFRu9SuM" width="100px;"/><br /><sub><b>Shiyue Zhang</b></sub>](https://github.com/zhangshyue)<br /> [💻](https://github.com/zhangshyue) [🤝](https://www.linkedin.com/in/shiyue-zhang-58828b196/) |

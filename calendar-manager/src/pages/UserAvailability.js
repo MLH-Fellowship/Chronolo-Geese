@@ -47,7 +47,7 @@ export default function UserAvailability() {
         >
           <Grid item xs={12} className={classes.cent}>
             <Typography variant="h5">
-              <b>drop your availability below</b>:
+              <b>DROP YOUR AVAILABILITIY BELOW</b>:
             </Typography>
           </Grid>
           <Grid item xs={12}>
