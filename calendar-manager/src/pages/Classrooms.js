@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../common/Navbar";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import "../styles/Classrooms.css";
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,11 +21,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles({
-    root: {
-      color: "#5e548e",
-      background: "#E0B1CB",
-    },
-  });
+  root: {
+    color: "#5e548e",
+    background: "#E0B1CB",
+  },
+});
 
 function Classrooms() {
   const [open, setOpen] = React.useState(false);
@@ -55,7 +55,7 @@ function Classrooms() {
           .collection("users")
           .doc(uid)
           .update({
-            classCodes: classes.concat({code: id, name: className}),
+            classCodes: classes.concat({ code: id, name: className }),
           });
       });
     setOpen(false);
@@ -88,11 +88,11 @@ function Classrooms() {
       </DialogActions>
     </Dialog>
   );
-  
+
   if (user) {
     return (
       <>
-        <Navbar styles={{position:'absolute'}}/>
+        <Navbar styles={{ position: "absolute" }} />
         <div className="bg">
           <div>
             <Grid container spacing={5}>
@@ -102,11 +102,19 @@ function Classrooms() {
                     <b>CLASSROOMS:</b>
                   </Typography>
                   <Paper>
-                    <List className="ov" component="nav" aria-label="classNames">
-                      {classes.map((name) => (
-                        <ListItem button>
-                          <ListItemText primary={name.name + " / " + name.code} />
-                        </ListItem>
+                    <List
+                      className="ov"
+                      component="nav"
+                      aria-label="classNames"
+                    >
+                      {classes.map((name, i) => (
+                        <Link key={i} to={"/availability/" + name.code} as={ListItem} button>
+                          {/* <ListItem button > */}
+                            <ListItemText
+                              primary={name.name + " / " + name.code}
+                            />
+                          {/* </ListItem> */}
+                        </Link>
                       ))}
                     </List>
                   </Paper>
@@ -135,9 +143,7 @@ function Classrooms() {
   } else {
     return (
       <Box container="true" m={10} mb={0}>
-        <Typography variant="h5">
-          Please Sign Up first
-        </Typography>
+        <Typography variant="h5">Please Sign Up first</Typography>
         <Button href="/signup" color="primary" variant="outlined">
           Sign Up
         </Button>
