@@ -4,23 +4,56 @@ import {
   Toolbar,
   Typography,
   Button,
-  IconButton, Menu, MenuItem
+  IconButton, ClickAwayListener, MenuItem, Grow, Paper, Popper, MenuList
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
+import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import { useUser } from "reactfire";
 import * as firebase from "firebase";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  paper: {
+    marginRight: theme.spacing(2),
+  },
+}));
+
 export default function Navbar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
   };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
 
   const history = useHistory();
   const user = useUser();
@@ -50,24 +83,32 @@ export default function Navbar() {
         <Button href={"/myclasses/" + user.uid} color="inherit">
           My Classrooms
         </Button>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="simple-menu"
+        <Button
+          ref={anchorRef}
+          aria-controls={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"
           color="inherit"
-          onClick={handleClick}
+          onClick={handleToggle}
         >
           <AccountCircle />
-        </IconButton>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}>
-          <MenuItem onClick={() => history.push("/profile/" + user.uid)}>Profile</MenuItem>
-          <MenuItem onClick={() => logout()}>Logout</MenuItem>
-        </Menu>
+        </Button>
+        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                    <MenuItem onClick={() => history.push("/profile/" + user.uid)}>Profile</MenuItem>
+                    <MenuItem onClick={() => logout()}>Logout</MenuItem>
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
       </Toolbar>
     </AppBar>
   );
