@@ -36,9 +36,13 @@ export default function Availability({ uid }) {
   const [initialize, setInitialize] = useState(false);
 
   const loadAvailability = () => {
+    const currDate = new Date();
     let dateTime = [];
     for (let i = 0; i < userData.availability.length; i++) {
-      dateTime.push(userData.availability[i].toDate());
+      const newDate = userData.availability[i].toDate();
+      if (newDate >= currDate) {
+        dateTime.push(newDate);
+      }
     }
     setSchedule(dateTime);
     setInitialize(true);
