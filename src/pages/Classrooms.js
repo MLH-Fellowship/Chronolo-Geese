@@ -52,6 +52,10 @@ function Classrooms() {
 
   const firestore = useFirestore();
 
+  if(!user){
+    history.push("/home");
+  }
+
   const addClass = () => {
     let id = "";
     firestore
@@ -150,7 +154,6 @@ function Classrooms() {
     </Dialog>
   );
 
-  if (user) {
     return (
       <>
         <Navbar styles={{ position: "absolute" }} />
@@ -207,9 +210,6 @@ function Classrooms() {
         </div>
       </>
     );
-  } else {
-    history.push("/home");
-  }
 }
 
 export default Classrooms;

@@ -48,7 +48,7 @@ export default function Home() {
     firebase
       .auth()
       .signOut()
-      .then((res) => history.push("/login"))
+      .then((res) => history.push("/home"))
       .catch(function (error) {
         console.log(error);
       });
@@ -64,7 +64,6 @@ export default function Home() {
           justify="center"
           alignItems="center"
           spacing={2}
-          fullWidth
         >
           {login ? <Login /> : <SignUp />}
           
