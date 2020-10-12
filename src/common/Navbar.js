@@ -24,7 +24,7 @@ export default function Navbar() {
     firebase
       .auth()
       .signOut()
-      .then((res) => history.push("/home"))
+      .then()
       .catch(function (error) {
         console.log(error);
       });

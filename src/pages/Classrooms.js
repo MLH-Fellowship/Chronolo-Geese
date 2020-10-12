@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "../common/Navbar";
 import { useParams } from "react-router-dom";
 
@@ -52,7 +52,7 @@ function Classrooms() {
 
   const firestore = useFirestore();
 
-  if(!user){
+  if (!user) {
     history.push("/home");
   }
 
@@ -154,62 +154,64 @@ function Classrooms() {
     </Dialog>
   );
 
-    return (
-      <>
-        <Navbar styles={{ position: "absolute" }} />
-        <div className="bg">
-          <div>
-            <Grid container spacing={5}>
-              <Grid item className="cont">
-                <div className="paper_list">
-                  <Typography variant="h5" style={{ color: "#E0B1CB" }}>
-                    <b>CLASSROOMS:</b>
-                  </Typography>
-                  <Paper>
-                    <List
-                      className="ov"
-                      component="nav"
-                      aria-label="classNames"
-                    >
-                      {classes.map((name) => (
-                        <ListItem button>
-                          <ListItemText
-                            primary={name.name + " / " + name.code}
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Paper>
-                </div>
-              </Grid>
-              <Grid item className="cont">
-                <div className="paper_button">
-                  <img src={require("../assets/classroom.svg")} />
-                  <Button
-                    variant="contained"
-                    disableElevation
-                    className={styles.root}
-                    onClick={() => setOpen(true)}
-                  >
-                    <b>NEW</b>
-                  </Button>
-                  <Button
-                    variant="contained"
-                    disableElevation
-                    className={styles.root}
-                    onClick={() => setOpenJoin(true)}
-                  >
-                    <b>JOIN</b>
-                  </Button>
-                </div>
-              </Grid>
+  return (
+    <>
+      <Navbar styles={{ position: "absolute" }} />
+      <div className="bg">
+        <div>
+          <Grid container spacing={5}>
+            <Grid item className="cont">
+              <div className="paper_list">
+                <Typography variant="h5" style={{ color: "#E0B1CB" }}>
+                  <b>CLASSROOMS:</b>
+                </Typography>
+                <Paper>
+                  <List className="ov" component="nav" aria-label="classNames">
+                    {classes.map((name) => (
+                      <ListItem button>
+                        <ListItemText
+                          key={name.code}
+                          primary={name.name + " / " + name.code}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Paper>
+              </div>
             </Grid>
-            {newDia}
-            {joinDia}
-          </div>
+            <Grid item className="cont">
+              <div className="paper_button">
+                <img
+                  alt="classroom-icon"
+                  src={require("../assets/classroom.svg")}
+                />
+                <Button
+                  key="new"
+                  variant="contained"
+                  disableElevation
+                  className={styles.root}
+                  onClick={() => setOpen(true)}
+                >
+                  <b>NEW</b>
+                </Button>
+                <Button
+                  key="join"
+                  variant="contained"
+                  disableElevation
+                  className={styles.root}
+                  onClick={() => setOpenJoin(true)}
+                >
+                  <b>JOIN</b>
+                </Button>
+              </div>
+            </Grid>
+          </Grid>
+          {newDia}
+          {joinDia}
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
 }
 
 export default Classrooms;

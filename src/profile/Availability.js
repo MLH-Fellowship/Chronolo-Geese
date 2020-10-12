@@ -1,30 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ScheduleSelector from "react-schedule-selector";
-import {
-  useFirestore,
-  //   AuthCheck,
-  //   useUser,
-  useFirestoreDocData,
-} from "reactfire";
+import { useFirestore, useFirestoreDocData } from "reactfire";
 import * as firebase from "firebase/app";
-// import Typography from "@material-ui/core/Typography";
-// import Grid from "@material-ui/core/Grid";
-// import Box from "@material-ui/core/Box";
-// import { makeStyles } from "@material-ui/core/styles";
-// import { useParams, useHistory } from "react-router-dom";
-// import Navbar from "../common/Navbar";
-
-// const useStyles = makeStyles((theme) => ({
-//   body: {
-//     backgroundColor: '#E0B1CB',
-//     height: "100vh",
-//   },
-//   email: {
-//     color: '#5E548E',
-//     font: "Nunito",
-//   },
-//   classCodes: {},
-// }));
 
 /**
  * @return {ReactElement} Displays profile page

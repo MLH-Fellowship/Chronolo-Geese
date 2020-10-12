@@ -66,9 +66,13 @@ export default function Home() {
           spacing={2}
         >
           {login ? <Login /> : <SignUp />}
-          
+
           <Grid item xs={12}>
-            <Link onClick={() => setLogin(!login)} component="button" variant="body2">
+            <Link
+              onClick={() => setLogin(!login)}
+              component="button"
+              variant="body2"
+            >
               {login ? "Sign In Instead" : "Log In Instead"}
             </Link>
           </Grid>
