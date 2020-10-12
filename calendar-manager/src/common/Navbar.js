@@ -9,10 +9,26 @@ import {
 import { AccountCircle } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { useUser } from "reactfire";
+import * as firebase from "firebase";
 
 export default function Navbar() {
   const history = useHistory();
   const user = useUser();
+
+  if (!user) {
+    return <></>;
+  }
+
+  // logs the user out
+  const logout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then((res) => history.push("/login"))
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   return (
     <AppBar
@@ -21,14 +37,11 @@ export default function Navbar() {
     >
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}></Typography>
-        <Button href={"/home/" + user.uid} color="inherit">
-          Home
+        <Button onClick={() => logout()} color="inherit">
+          Log Out
         </Button>
         <Button href={"/myclasses/" + user.uid} color="inherit">
           My Classrooms
-        </Button>
-        <Button href={"/availability/" + user.uid} color="inherit">
-          My Availability
         </Button>
         <IconButton
           aria-label="account of current user"
