@@ -19,6 +19,7 @@ It can be a challenge to agree on a specific time to meet up and collaborate on 
 - Figma to create a mockup
 - React app boiler plate
 - Google Firebase for authentication and the database
+- [Reactfire](https://github.com/FirebaseExtended/reactfire) to connect the front and back
 - [React Schedule Tracker](https://github.com/bibekg/react-schedule-selector) for the availability tracker
 - [Sky](https://github.com/lucagez/sky) for the animations in the landing page
 
