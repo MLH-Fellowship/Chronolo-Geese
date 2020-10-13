@@ -159,10 +159,10 @@ function Classrooms() {
         <div>
           <Grid container spacing={5}>
             <Grid item className="cont">
+              <Typography variant="h2" style={{ color: "#E0B1CB", textAlign: "center" }}>
+                <b>Classrooms:</b>
+              </Typography>
               <div className="paper_list">
-                <Typography variant="h5" style={{ color: "#E0B1CB" }}>
-                  <b>CLASSROOMS:</b>
-                </Typography>
                 <Paper>
                   <List className="ov" component="nav" aria-label="classNames">
                     {classes.map((name) => (
