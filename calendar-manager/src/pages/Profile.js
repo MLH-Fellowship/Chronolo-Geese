@@ -10,7 +10,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useFirestore, useUser, useFirestoreDocData } from "reactfire";
 
 import Navbar from "../common/Navbar";
-import Availability from "../profile/Availability";
+import Availability from "../utils/Availability";
 import "../styles/Profile.css";
 
 const useStyles = makeStyles((theme) => ({

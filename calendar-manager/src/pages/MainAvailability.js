@@ -23,6 +23,8 @@ import { HeatMapGrid } from "react-grid-heatmap";
 
 import "../styles/MainAvailability.css";
 import Navbar from "../common/Navbar";
+import CreateEventButton from "../utils/CreateEventButton";
+import { Button } from "@material-ui/core";
 
 /**
  * @return {ReactElement}
@@ -283,6 +285,7 @@ export default function MainAvailability() {
               </Paper>
             </Grid>
           </Grid>
+          <CreateEventButton />
         </Container>
       </div>
     );
