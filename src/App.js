@@ -5,6 +5,7 @@ import "./App.css";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import UserAvailability from "./pages/UserAvailability";
+import NoAccess from "./pages/NoAccess"
 import { FirebaseAppProvider } from "reactfire";
 import Classrooms from "./pages/Classrooms";
 
@@ -38,6 +39,9 @@ function App() {
             </Route>
             <Route exact path="/myclasses/:uid">
               <Classrooms />
+            </Route>
+            <Route exact path="/noAccess">
+              <NoAccess />
             </Route>
             <Route path="/">
               <Home />

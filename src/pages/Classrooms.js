@@ -54,7 +54,9 @@ function Classrooms() {
 
   if (!user) {
     history.push("/home");
-  }
+  } else if (uid !== user.uid) {
+    history.push("/noAccess");
+  } 
 
   const addClass = () => {
     let id = "";
@@ -112,7 +114,6 @@ function Classrooms() {
           id="name"
           label="Class Name"
           onChange={(e) => setClassName(e.target.value)}
-          fullWidth
         />
       </DialogContent>
       <DialogActions>
@@ -140,7 +141,6 @@ function Classrooms() {
           id="name"
           label="Class Code"
           onChange={(e) => setClassId(e.target.value)}
-          fullWidth
         />
       </DialogContent>
       <DialogActions>
