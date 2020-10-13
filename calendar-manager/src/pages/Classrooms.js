@@ -13,6 +13,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import {
   useFirestore,
@@ -55,6 +57,52 @@ function Classrooms() {
   if (!user) {
     history.push("/home");
   }
+
+  const deleteFromClassArray = (user, classCode) => {
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        classCodes: classes.filter((el) => el.code !== classCode),
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const deleteClass = (i) => {
+    // CASE: prof is the one deleting the class
+    const docRef = classesCollection.doc(i);
+    docRef
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          let students = doc.data().students;
+          for (var j = 0; j < students.length; j++) {
+            deleteFromClassArray(students[j], i);
+          }
+
+          if (doc.data().professors[0] === user.uid) {
+            firestore
+              .collection("classes")
+              .doc(i)
+              .delete()
+              .then(function () {
+                console.log("Document successfully deleted!");
+              })
+              .catch(function (error) {
+                console.error("Error removing document: ", error);
+              });
+          }
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+
+    // delete it from the array
+    deleteFromClassArray(user.uid, i);
+  };
 
   const addClass = () => {
     let id = "";
@@ -166,8 +214,19 @@ function Classrooms() {
                 <Paper>
                   <List className="ov" component="nav" aria-label="classNames">
                     {classes.map((name) => (
-                      <ListItem button>
-                        <ListItemText primary={name.name + " / " + name.code} />
+                      <ListItem key={name.code}>
+                        <ListItem key={name.code + "1"} button>
+                          <ListItemText
+                            primary={name.name + " / " + name.code}
+                          />
+                        </ListItem>
+                        <IconButton
+                          onClick={() => deleteClass(name.code)}
+                          edge="end"
+                          aria-label="delete"
+                        >
+                          <DeleteIcon />
+                        </IconButton>
                       </ListItem>
                     ))}
                   </List>
@@ -176,7 +235,10 @@ function Classrooms() {
             </Grid>
             <Grid item className="cont">
               <div className="paper_button">
-                <img alt="classroom-logo" src={require("../assets/classroom.svg")} />
+                <img
+                  alt="classroom-logo"
+                  src={require("../assets/classroom.svg")}
+                />
                 <Button
                   variant="contained"
                   disableElevation
