@@ -54,7 +54,9 @@ function Classrooms() {
 
   if (!user) {
     history.push("/home");
-  }
+  } else if (uid !== user.uid) {
+    history.push("/noAccess");
+  } 
 
   const addClass = () => {
     let id = "";
