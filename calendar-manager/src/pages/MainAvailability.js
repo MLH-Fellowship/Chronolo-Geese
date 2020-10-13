@@ -14,6 +14,9 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -65,8 +68,8 @@ export default function MainAvailability() {
   );
   const usersCollection = useFirestore().collection("users");
 
-  const [profesorData, setProfesorData] = useState({name:"", availability:[]})
-  const [studentsData, setstudentsData] = useState([]);
+  const [professorsData, setProfessorsData] = useState([]);
+  const [studentsData, setStudentsData] = useState([]);
 
   // const getUserData = (uid) => {
   //   const docRef = usersCollection.doc(uid);
@@ -87,54 +90,63 @@ export default function MainAvailability() {
   //   // return {displayName: userData.displayName, availability: [...dateTime]};
   // };
   // const addProffesorData = (data) => {
-  //   //SHIYUE: I am not sure what 
+  //   //SHIYUE: I am not sure what
   //   setProfesorData([...profesorData, data])
   // }
 
   React.useEffect(() => {
     // SHIYUE:
-    // From my understanding you are ttrying to get the "name" and 
+    // From my understanding you are ttrying to get the "name" and
     // "availability" of evey user in professors field. So I think
     // this is how I would do it. I'm a little confused because I
-    // don't know when you load the student data. 
+    // don't know when you load the student data.
     console.log("proffessor", classData.professors[0]);
-    let professors = [];
+    let professors = [],
+      students = [];
 
-    if(classData.professors){
-      
-        classData.professors.map((uid,index) => {
-          const docRef = usersCollection.doc(uid);
-          // HELP HERE @SHIYUE
-          docRef
-            .get()
-            .then(function (doc) {
-              if (doc.exists) {
-                console.log(doc.data());
-                professors.push({name:doc.data().displayName, availability:doc.data().availability});
-                setProfesorData(professors);
-                console.log(professors);
-              }
-            })
-            .catch(function (error) {
-              console.log("Error getting document:", error);
-            });
-        });
-
-      
-      // console.log("user", getUserData(classData.professors[0]))
+    if (classData.professors) {
+      classData.professors.map((uid, index) => {
+        const docRef = usersCollection.doc(uid);
+        docRef
+          .get()
+          .then(function (doc) {
+            if (doc.exists) {
+              professors.push({
+                name: doc.data().displayName,
+                availability: doc.data().availability,
+              });
+            }
+            setProfessorsData([...professors]);
+          })
+          .catch(function (error) {
+            console.log("Error getting document:", error);
+          });
+      });
     }
 
-    /*
-    if(classData.students){
-      classData.students.map(student => {
-        getUserData(student)
-      })
+    if (classData.students) {
+      classData.students.map((uid) => {
+        const docRef = usersCollection.doc(uid);
+        docRef
+          .get()
+          .then(function (doc) {
+            if (doc.exists) {
+              students.push({
+                name: doc.data().displayName,
+                availability: doc.data().availability,
+              });
+              setStudentsData([...students]);
+            }
+          })
+          .catch(function (error) {
+            console.log("Error getting document:", error);
+          });
+      });
     }
-    */
-
   }, [classId]);
-
-  const [teacherSchedule, setTeacherSchedule] = useState([]);
+  
+  console.log("students", studentsData, "professors", professorsData)
+  // const [teacherSchedule, setTeacherSchedule] = useState([]);
 
   const xLabels = new Array(24).fill(0).map((_, i) => `${i}`);
   const yLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
@@ -247,6 +259,19 @@ export default function MainAvailability() {
                   {heatmap}
                 </div>
               </Paper>
+              <Paper style={{margin:"1rem 0"}}>
+                <List>
+                  {
+                    professorsData.map( (professor, i) => (
+                      <ListItem key={i}>
+                        <ListItemText
+                            primary={professor.name}
+                          />
+                      </ListItem>
+                    ))
+                  }
+                </List>
+              </Paper>
             </Grid>
             <Grid
               item
@@ -280,6 +305,19 @@ export default function MainAvailability() {
                 >
                   {heatmap}
                 </div>
+              </Paper>
+              <Paper style={{margin:"1rem 0"}}>
+                <List>
+                  {
+                    studentsData.map( (student, i) => (
+                      <ListItem key={i}>
+                        <ListItemText
+                            primary={student.name}
+                          />
+                      </ListItem>
+                    ))
+                  }
+                </List>
               </Paper>
             </Grid>
           </Grid>
