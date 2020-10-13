@@ -4,25 +4,19 @@ import {
   Toolbar,
   Typography,
   Button,
-  IconButton, ClickAwayListener, MenuItem, Grow, Paper, Popper, MenuList
+  ClickAwayListener,
+  MenuItem,
+  Grow,
+  Paper,
+  Popper,
+  MenuList,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
-import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import { useUser } from "reactfire";
 import * as firebase from "firebase";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  paper: {
-    marginRight: theme.spacing(2),
-  },
-}));
-
 export default function Navbar() {
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -39,7 +33,7 @@ export default function Navbar() {
   };
 
   function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
+    if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);
     }
@@ -85,23 +79,40 @@ export default function Navbar() {
         </Button>
         <Button
           ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
+          aria-controls={open ? "menu-list-grow" : undefined}
           aria-haspopup="true"
           color="inherit"
           onClick={handleToggle}
         >
           <AccountCircle />
         </Button>
-        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+        <Popper
+          open={open}
+          anchorEl={anchorRef.current}
+          role={undefined}
+          transition
+          disablePortal
+        >
           {({ TransitionProps, placement }) => (
             <Grow
               {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+              style={{
+                transformOrigin:
+                  placement === "bottom" ? "center top" : "center bottom",
+              }}
             >
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={() => history.push("/profile/" + user.uid)}>Profile</MenuItem>
+                  <MenuList
+                    autoFocusItem={open}
+                    id="menu-list-grow"
+                    onKeyDown={handleListKeyDown}
+                  >
+                    <MenuItem
+                      onClick={() => history.push("/profile/" + user.uid)}
+                    >
+                      Profile
+                    </MenuItem>
                     <MenuItem onClick={() => logout()}>Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
