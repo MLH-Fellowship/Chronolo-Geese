@@ -60,6 +60,48 @@ export default function MainAvailability() {
     setDay(e.target.value);
   };
 
+  const classData = useFirestoreDocData(
+    useFirestore().collection("classes").doc(classId)
+  );
+  const usersCollection = useFirestore().collection("users");
+
+  const [profesorData, setProfesorData] = useState({name:"", availability:[]})
+  const [studentsData, setstudentsData] = useState([]);
+
+  const getUserData = (uid) => {
+    const docRef = usersCollection.doc(uid);
+    // HELP HERE @SHIYUE
+    docRef.get().then((doc) => console.log("user data", doc.data))
+
+    // return {displayName: userData.displayName, availability: [...dateTime]};
+  };
+  const addProffesorData = (data) => {
+    setProfesorData([...profesorData, data])
+  }
+
+  React.useEffect(() => {
+    console.log("proffessor", classData.professors[0]);
+
+    if(classData.professors){
+      
+        classData.proffessor.map(proffessor => {
+          addProffesorData(getUserData(proffessor));
+        });
+
+      
+      console.log("user", getUserData(classData.professors[0]))
+    }
+
+    /*
+    if(classData.students){
+      classData.students.map(student => {
+        getUserData(student)
+      })
+    }
+    */
+
+  }, [classData]);
+
   const [teacherSchedule, setTeacherSchedule] = useState([]);
 
   const xLabels = new Array(24).fill(0).map((_, i) => `${i}`);
@@ -117,7 +159,10 @@ export default function MainAvailability() {
           >
             <Grid item xs={12} style={{ textAlign: "center" }}>
               <Typography variant="h5" className={classes.cent}>
-                <b>CLASSROOM: {classId}</b>:
+                <b>CLASSROOM: {classId}</b>
+              </Typography>
+              <Typography variant="h6" className={classes.cent}>
+                <b>{classData.title}</b>
               </Typography>
               {/* <FormControl variant="filled" className={classes.formControl}>
                 <Select
@@ -161,7 +206,14 @@ export default function MainAvailability() {
             </Grid>
             <Grid item xs={9}>
               <Paper className={classes.paperBg} variant="outlined">
-                {heatmap}
+                <div
+                  style={{
+                    width: "100%",
+                    padding: "0.5rem 0",
+                  }}
+                >
+                  {heatmap}
+                </div>
               </Paper>
             </Grid>
             <Grid
@@ -187,16 +239,16 @@ export default function MainAvailability() {
               </Typography>
             </Grid>
             <Grid item xs={9}>
-              <div
-                style={{
-                  width: "100%",
-                  fontFamily: "sans-serif",
-                }}
-              >
-                <Paper className={classes.paperBg} variant="outlined">
+              <Paper className={classes.paperBg} variant="outlined">
+                <div
+                  style={{
+                    width: "100%",
+                    padding: "0.5rem 0",
+                  }}
+                >
                   {heatmap}
-                </Paper>
-              </div>
+                </div>
+              </Paper>
             </Grid>
           </Grid>
         </Container>
