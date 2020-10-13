@@ -68,28 +68,60 @@ export default function MainAvailability() {
   const [profesorData, setProfesorData] = useState({name:"", availability:[]})
   const [studentsData, setstudentsData] = useState([]);
 
-  const getUserData = (uid) => {
-    const docRef = usersCollection.doc(uid);
-    // HELP HERE @SHIYUE
-    docRef.get().then((doc) => console.log("user data", doc.data))
+  // const getUserData = (uid) => {
+  //   const docRef = usersCollection.doc(uid);
+  //   // HELP HERE @SHIYUE
+  //   // const docRef = classesCollection.doc(classId);
+  //   docRef
+  //     .get()
+  //     .then(function (doc) {
+  //       if (doc.exists) {
+  //         console.log(doc.data());
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       console.log("Error getting document:", error);
+  //     });
+  //   // docRef.get().then((doc) => console.log("user data", doc.data))
 
-    // return {displayName: userData.displayName, availability: [...dateTime]};
-  };
-  const addProffesorData = (data) => {
-    setProfesorData([...profesorData, data])
-  }
+  //   // return {displayName: userData.displayName, availability: [...dateTime]};
+  // };
+  // const addProffesorData = (data) => {
+  //   //SHIYUE: I am not sure what 
+  //   setProfesorData([...profesorData, data])
+  // }
 
   React.useEffect(() => {
+    // SHIYUE:
+    // From my understanding you are ttrying to get the "name" and 
+    // "availability" of evey user in professors field. So I think
+    // this is how I would do it. I'm a little confused because I
+    // don't know when you load the student data. 
     console.log("proffessor", classData.professors[0]);
+    let professors = [];
 
     if(classData.professors){
       
-        classData.proffessor.map(proffessor => {
-          addProffesorData(getUserData(proffessor));
+        classData.professors.map((uid,index) => {
+          const docRef = usersCollection.doc(uid);
+          // HELP HERE @SHIYUE
+          docRef
+            .get()
+            .then(function (doc) {
+              if (doc.exists) {
+                console.log(doc.data());
+                professors.push({name:doc.data().displayName, availability:doc.data().availability});
+                setProfesorData(professors);
+                console.log(professors);
+              }
+            })
+            .catch(function (error) {
+              console.log("Error getting document:", error);
+            });
         });
 
       
-      console.log("user", getUserData(classData.professors[0]))
+      // console.log("user", getUserData(classData.professors[0]))
     }
 
     /*
@@ -100,7 +132,7 @@ export default function MainAvailability() {
     }
     */
 
-  }, [classData]);
+  }, [classId]);
 
   const [teacherSchedule, setTeacherSchedule] = useState([]);
 
