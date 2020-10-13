@@ -39,43 +39,22 @@ export default function Profile() {
         <Navbar />
         <Box container="true" marginTop={10} margin={5}>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                <b>NAME</b>: {userData.displayName}
+            <Grid item xs={6}>
+              <Typography variant="h1" style={{ textAlign: "center" }}>
+                {userData.displayName}
+              </Typography>
+              <Typography variant="h4" style={{ textAlign: "center" }}>
+                {user.email}
               </Typography>
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                <b>EMAIL</b>: {user.email}
-              </Typography>
+            <Grid item xs={6} style={{ textAlign: "center" }} >
+              <img alt="classroom-logo" src={require("../assets/clock.png")} />
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                <b>IDENTITY</b>: {userData.isStudent ? "Student" : "Professor"}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                <b>CLASSES</b>:
-              </Typography>
-            </Grid>
-            {userData.classCodes.length > 0 ? (
-              userData.classCodes.map((v, index) => {
-                return (
-                  <Grid item key={index} className={classes.classCodes}>
-                    {v.name}
-                  </Grid>
-                );
-              })
-            ) : (
-              <Grid item className={classes.font}>
-                No classes added yet
-              </Grid>
-            )}
+
 
             <Grid item xs={12}>
-              <Typography variant="h5" style={{ textAlign: "center" }}>
-                <b>drop your availability below</b>:
+              <Typography variant="h3" style={{ textAlign: "center" }}>
+                <b>Availability</b>:
               </Typography>
             </Grid>
             <Grid item xs={12} style={{ marginLeft: "0px" }}>
