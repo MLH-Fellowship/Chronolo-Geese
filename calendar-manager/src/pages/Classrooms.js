@@ -24,7 +24,7 @@ import * as firebase from "firebase/app";
 
 import Navbar from "../common/Navbar";
 import "../styles/Classrooms.css";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -165,10 +165,14 @@ function Classrooms() {
                 </Typography>
                 <Paper>
                   <List className="ov" component="nav" aria-label="classNames">
-                    {classes.map((name) => (
-                      <ListItem button>
-                        <ListItemText primary={name.name + " / " + name.code} />
-                      </ListItem>
+                    {classes.map((name, i) => (
+                      <Link key={i} to={`/availability/${name.code}`}>
+                        <ListItem button>
+                          <ListItemText
+                            primary={name.name + " / " + name.code}
+                          />
+                        </ListItem>
+                      </Link>
                     ))}
                   </List>
                 </Paper>
@@ -176,7 +180,10 @@ function Classrooms() {
             </Grid>
             <Grid item className="cont">
               <div className="paper_button">
-                <img alt="classroom-logo" src={require("../assets/classroom.svg")} />
+                <img
+                  alt="classroom-logo"
+                  src={require("../assets/classroom.svg")}
+                />
                 <Button
                   variant="contained"
                   disableElevation
