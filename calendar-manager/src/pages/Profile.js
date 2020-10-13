@@ -1,19 +1,17 @@
 import React from "react";
-import {
-  useFirestore,
-  // AuthCheck,
-  useUser,
-  useFirestoreDocData,
-} from "reactfire";
+
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
+
+import { useHistory, useParams } from "react-router-dom";
+
+import { useFirestore, useUser, useFirestoreDocData } from "reactfire";
+
 import Navbar from "../common/Navbar";
 import Availability from "../profile/Availability";
 import "../styles/Profile.css";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   classCodes: {
@@ -27,8 +25,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile() {
   const history = useHistory();
   const user = useUser();
-  // console.log(user);
-  //   const [currUser, setCurrUser] = useState(useUser());
   const classes = useStyles();
   const { uid } = useParams();
   const userData = useFirestoreDocData(
@@ -78,7 +74,7 @@ export default function Profile() {
             )}
 
             <Grid item xs={12}>
-              <Typography variant="h5" style={{textAlign: "center"}}>
+              <Typography variant="h5" style={{ textAlign: "center" }}>
                 <b>drop your availability below</b>:
               </Typography>
             </Grid>

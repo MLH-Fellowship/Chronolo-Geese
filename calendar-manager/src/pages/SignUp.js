@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
-import * as firebase from "firebase";
-
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { Typography, Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
-import { useFirestore } from "reactfire";
 import { makeStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
+
+import { useHistory } from "react-router-dom";
+import { useFirestore } from "reactfire";
+import * as firebase from "firebase";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -68,7 +68,7 @@ function SignUp() {
               });
             }
           })
-          .then(res =>  history.push("/availability/" + user.uid))
+          .then((res) => history.push("/availability/" + user.uid))
           .catch(function (error) {
             console.log("Error getting document:", error);
           });
@@ -86,7 +86,6 @@ function SignUp() {
       </Grid>
       <Grid item xs={12}>
         <TextField
-          fullWidth
           id="username"
           label="username"
           onChange={(e) => setUsername(e.target.value)}
@@ -96,7 +95,6 @@ function SignUp() {
       </Grid>
       <Grid item xs={12}>
         <TextField
-          fullWidth
           id="email"
           label="email"
           onChange={(e) => setEmail(e.target.value)}
@@ -106,7 +104,6 @@ function SignUp() {
       </Grid>
       <Grid item xs={12}>
         <TextField
-          fullWidth
           id="password"
           label="password"
           onChange={(e) => setPassword(e.target.value)}
