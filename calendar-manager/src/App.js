@@ -8,6 +8,7 @@ import UserAvailability from "./pages/UserAvailability";
 import { FirebaseAppProvider } from "reactfire";
 import Classrooms from "./pages/Classrooms";
 import HowItWorks from "./pages/HowItWorks";
+import Loading from "./pages/Loading"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -28,6 +29,9 @@ function App() {
       <Suspense fallback={<p>loading...</p>}>
         <Router>
           <Switch>
+            <Route path="/load">
+              <Loading />
+            </Route>
             <Route path="/about">
               <HowItWorks />
             </Route>
