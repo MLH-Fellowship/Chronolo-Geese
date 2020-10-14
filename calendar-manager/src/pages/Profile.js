@@ -29,7 +29,7 @@ export default function Profile() {
       .collection("users")
       .doc(user ? user.uid : uid)
   );
-  
+
   return (
     <div className="prof_bg">
       <Navbar />

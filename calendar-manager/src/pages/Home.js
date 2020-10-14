@@ -116,16 +116,16 @@ export default function Home() {
               {!user ? (
                 notUser
               ) : (
-                  // logout button
-                  <Button
-                    onClick={() => logout()}
-                    variant="contained"
-                    disableElevation
-                    className={classes.button}
-                  >
-                    <b>Log-out</b>
-                  </Button>
-                )}
+                // logout button
+                <Button
+                  onClick={() => logout()}
+                  variant="contained"
+                  disableElevation
+                  className={classes.button}
+                >
+                  <b>Log-out</b>
+                </Button>
+              )}
             </Grid>
           </Grid>
         </div>
