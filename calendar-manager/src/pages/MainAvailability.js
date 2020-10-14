@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import {
   useFirestore,
-  // AuthCheck,
   useUser,
   useFirestoreDocData,
 } from "reactfire";
-import * as firebase from "firebase/app";
 import { useHistory, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -16,7 +14,6 @@ import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Button from "@material-ui/core/Button";
 
 import { HeatMapGrid } from "react-grid-heatmap";
 import dayjs from "dayjs";
@@ -25,7 +22,7 @@ import isBetween from "dayjs/plugin/isBetween";
 import "../styles/MainAvailability.css";
 import Navbar from "../common/Navbar";
 import CreateEventButton from "../utils/CreateEventButton";
-// import { Button } from "@material-ui/core";
+
 
 /**
  * @return {ReactElement}
@@ -62,11 +59,6 @@ export default function MainAvailability() {
   const styles = useStyles();
 
   const user = useUser();
-  const [day, setDay] = useState("Monday");
-  const handleDayChange = (e) => {
-    //   console.log(e);
-    setDay(e.target.value);
-  };
   const classesCollection = useFirestore().collection("classes");
   const classData = useFirestoreDocData(classesCollection.doc(classId));
   const usersCollection = useFirestore().collection("users");
@@ -127,7 +119,6 @@ export default function MainAvailability() {
   // make array of intervals once the page loads. Size: 28x7 (28 chunks of time from 8am to 9:30pm x 7 days)
   const [weekIntervals, setWeekIntervals] = useState([]);
   React.useEffect(() => {
-    let today = dayjs();
     const intervals = [];
     for (let day = 0; day < 8; day++) {
       const dayChunks = [];
@@ -168,15 +159,10 @@ export default function MainAvailability() {
 
   // TODO: Find better way to not have professorsHeatmapDataMock AND professorsHeatmapData state.
   //    I think it can be done in an unique variable
-  let professorsHeatmapDataMock = new Array(yLabels.length)
-    .fill(0)
-    .map(() => new Array(xLabels.length).fill(0));
   let studentsHeatmapDataMock = new Array(yLabels.length)
     .fill(0)
     .map(() => new Array(xLabels.length).fill(0));
-  const [professorsHeatmapData, setProfessorsHeatmapData] = useState(
-    professorsHeatmapDataMock
-  );
+
   const [studentsHeatmapData, setStudentsHeatmapData] = useState(
     studentsHeatmapDataMock
   );

@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
-import {useUser, useFirestoreDocData} from 'reactfire';
-import {makeStyles} from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import ApiCalendar from 'react-google-calendar-api';
-import DateFnsUtils from '@date-io/date-fns';
-import {DateTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
+import React, { useState } from "react";
+import { useFirestoreDocData } from "reactfire";
+import { makeStyles } from "@material-ui/core/styles";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import ApiCalendar from "react-google-calendar-api";
+import DateFnsUtils from "@date-io/date-fns";
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -20,30 +20,31 @@ const useStyles = makeStyles((theme) => ({
 /**
  * @return {ReactElement} Add meeting event button
  */
-export default function CreateEventButton(
-    {classId, classesCollection, studentEmail}) {
+export default function CreateEventButton({
+  classId,
+  classesCollection,
+  studentEmail,
+}) {
   const classes = useStyles();
-  const moment = require('moment-timezone');
+  const moment = require("moment-timezone");
   const timeZone = moment.tz.guess();
   const [open, setOpen] = useState(false);
-  const [summary, setSummary] = useState('');
+  const [summary, setSummary] = useState("");
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(Date.now() + 30 * 60 * 1000);
-  const [description, setDescription] = useState('');
-  const user = useUser();
+  const [description, setDescription] = useState("");
   const classData = useFirestoreDocData(classesCollection.doc(classId));
 
   const handleClickOpen = async () => {
     setOpen(true);
-    setSummary(classData.title + ' meeting');
+    setSummary(classData.title + " meeting");
   };
 
   const handleClose = () => {
     setOpen(false);
-    setSummary(classData.title + ' meeting');
+    setSummary(classData.title + " meeting");
     setStartTime(new Date());
     setEndTime(Date.now() + 30 * 60 * 1000);
-    setDescription('');
   };
 
   const handleSave = () => {
@@ -57,33 +58,32 @@ export default function CreateEventButton(
       eventEndTime = startTime;
     }
     const event = {
-      'summary': summary,
-      'description': description,
-      'start': {
-        'dateTime': startTime.toISOString(),
-        'timeZone': timeZone,
+      summary: summary,
+      description: description,
+      start: {
+        dateTime: startTime.toISOString(),
+        timeZone: timeZone,
       },
-      'end': {
-        'dateTime': eventEndTime.toISOString(),
-        'timeZone': timeZone,
+      end: {
+        dateTime: eventEndTime.toISOString(),
+        timeZone: timeZone,
       },
-      'attendees': studentEmail,
+      attendees: studentEmail,
     };
     ApiCalendar.createEvent(event)
-        .then((result) => {console.log(result)})
-        .catch((error) => {});
-    setSummary(classData.title + ' meeting');
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {});
+    setSummary(classData.title + " meeting");
     setStartTime(new Date());
-    setEndTime(new Date());
-    setDescription('');
+    setEndTime(new Date(new Date().setMinutes(new Date().getMinutes() + 30)));
+    setDescription("");
   };
 
   return (
     <div>
-      <Button variant='contained'
-        color='primary'
-        onClick={handleClickOpen}
-      >
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
         Add Meeting
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -93,7 +93,7 @@ export default function CreateEventButton(
             margin="dense"
             label="Event Summary"
             value={summary}
-            onChange={(e)=> setSummary(e.target.value)}
+            onChange={(e) => setSummary(e.target.value)}
             fullWidth
           />
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -134,4 +134,3 @@ export default function CreateEventButton(
     </div>
   );
 }
-

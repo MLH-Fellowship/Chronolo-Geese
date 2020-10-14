@@ -26,7 +26,7 @@ import * as firebase from "firebase/app";
 
 import Navbar from "../common/Navbar";
 import "../styles/Classrooms.css";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
