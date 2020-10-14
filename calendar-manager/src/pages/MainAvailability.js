@@ -156,7 +156,7 @@ export default function MainAvailability() {
   ];
   
   for(var i = 0; i < 7; i ++){
-    yLabels[i] = today.getMonth() + "/" + (today.getDate() + i)
+    yLabels[i] = (today.getMonth() + 1) + "/" + (today.getDate() + i)
   }
 
   // TODO: Find better way to not have professorsHeatmapDataMock AND professorsHeatmapData state.
@@ -282,7 +282,11 @@ export default function MainAvailability() {
               </Typography>
             </Grid>
             <Grid item xs={8}>
-              <Paper className={styles.classCodes.paperBg} variant="outlined">
+              <Paper
+                className={styles.classCodes.paperBg}
+                variant="outlined"
+                style={{width: "1000px"}}
+              >
                 <div
                   style={{
                     width: "100%",
