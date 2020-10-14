@@ -24,6 +24,8 @@ import isBetween from "dayjs/plugin/isBetween";
 
 import "../styles/MainAvailability.css";
 import Navbar from "../common/Navbar";
+import CreateEventButton from "../utils/CreateEventButton";
+// import { Button } from "@material-ui/core";
 
 /**
  * @return {ReactElement}
@@ -60,17 +62,26 @@ export default function MainAvailability() {
   const styles = useStyles();
 
   const user = useUser();
+  const [day, setDay] = useState("Monday");
+  const handleDayChange = (e) => {
+    //   console.log(e);
+    setDay(e.target.value);
+  };
+  const classesCollection = useFirestore().collection("classes");
   const classData = useFirestoreDocData(
-    useFirestore().collection("classes").doc(classId)
+    classesCollection.doc(classId)
   );
   const usersCollection = useFirestore().collection("users");
+  
 
   const [professorsData, setProfessorsData] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
 
+  const [studentEmail, setStudentEmail] = useState([]);
+
   React.useEffect(() => {
     let professors = [],
-      students = [];
+      students = [],email = [];
 
     if (classData.professors) {
       classData.professors.map((uid, index) => {
@@ -103,7 +114,9 @@ export default function MainAvailability() {
                 name: doc.data().displayName,
                 availability: doc.data().availability,
               });
+              email.push({"email":doc.data().email});
               setStudentsData([...students]);
+              setStudentEmail([...email]);
             }
           })
           .catch(function (error) {
@@ -286,15 +299,12 @@ export default function MainAvailability() {
                 </List>
               </Paper>
             </Grid>
-            <Grid item xs={2}>
-              <Button
-                variant="contained"
-                disableElevation
-                className={styles.button}
-                // onClick={() => setOpenJoin(true)}
-              >
-                <b>MEET</b>
-              </Button>
+            <Grid item xs={12} style={{ textAlign: "center" }}>
+              <CreateEventButton
+                classId={classId}
+                classesCollection={classesCollection}
+                studentEmail={studentEmail}
+              />
             </Grid>
           </Grid>
         </Container>
