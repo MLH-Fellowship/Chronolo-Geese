@@ -42,7 +42,7 @@ export default function CreateEventButton(
     setOpen(false);
     setSummary(classData.title + ' meeting');
     setStartTime(new Date());
-    setEndTime(new Date());
+    setEndTime(new Date(startTime.setMinutes( startTime.getMinutes() + 30 )));
     setDescription('');
   };
 
