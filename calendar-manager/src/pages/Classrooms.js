@@ -50,6 +50,7 @@ function Classrooms() {
   }
   const classesCollection = useFirestore().collection("classes");
   const usersCollection = useFirestore().collection("users");
+
   const classes = setFirestoreDocData(
     usersCollection.doc(user ? user.uid : uid)
   ).classCodes;
@@ -58,7 +59,7 @@ function Classrooms() {
 
   const firestore = useFirestore();
 
-  const deleteFromClassArray = (user, classCode) => {
+  const deleteFromCurrentStudentClassArray = (user, classCode) => {
     firestore
       .collection("users")
       .doc(user)
@@ -70,18 +71,49 @@ function Classrooms() {
       });
   };
 
+  const deleteFromArbitraryStudentClassArray = (user, classCode) => {
+    const docRef = usersCollection.doc(user);
+    docRef
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          let classes = doc.data().classCodes;
+
+          // remove from the class array
+          for (var j = 0; j < classes.length; j++) {
+            firestore
+              .collection("users")
+              .doc(user)
+              .update({
+                classCodes: classes.filter((el) => el.code !== classCode),
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+  };
+
   const deleteClass = (i) => {
-    // CASE: prof is the one deleting the class
+    // i: classId
+
     const docRef = classesCollection.doc(i);
     docRef
       .get()
       .then(function (doc) {
         if (doc.exists) {
           let students = doc.data().students;
+
+          // remove from the class array
           for (var j = 0; j < students.length; j++) {
-            deleteFromClassArray(students[j], i);
+            deleteFromArbitraryStudentClassArray(students[j], i);
           }
 
+          // CASE: prof is the one deleting the class
           if (doc.data().professors[0] === user.uid) {
             firestore
               .collection("classes")
@@ -93,6 +125,17 @@ function Classrooms() {
               .catch(function (error) {
                 console.error("Error removing document: ", error);
               });
+          } else {
+            // remove the student from the the list of students in classes
+            firestore
+              .collection("classes")
+              .doc(i)
+              .update({
+                students: students.filter((stu) => stu !== user.uid),
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
           }
         }
       })
@@ -100,8 +143,8 @@ function Classrooms() {
         console.log("Error getting document:", error);
       });
 
-    // delete it from the array
-    deleteFromClassArray(user.uid, i);
+    // delete it from the class array
+    deleteFromCurrentStudentClassArray(user.uid, i);
   };
 
   const addClass = () => {
