@@ -42,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
  * @return {ReactElement} Add game event button
  */
 export default function CreateEventButton(
-    {classId, classesCollection}) {
-  let friendEmail = '';
+    {classId, classesCollection, studentEmail}) {
+      // console.log(studentEmail);
   const classes = useStyles();
   const moment = require('moment-timezone');
   const timeZone = moment.tz.guess();
@@ -54,7 +54,7 @@ export default function CreateEventButton(
   const [description, setDescription] = useState('');
 //   const [roomId, setRoomId] = useState('');
 //   let [email, setEmail] = useState([]);
-  const [emails, setEmails] = useState(['zhangshiyuez@gmail.com']);
+  // const [emails, setEmails] = useState(['zhangshiyuez@gmail.com']);
   const user = useUser();
   const classData = useFirestoreDocData(classesCollection.doc(classId));
 
@@ -70,7 +70,7 @@ export default function CreateEventButton(
     setEndTime(new Date());
     setDescription('');
     // setEmail('');
-    setEmails(['zhangshiyuez@gmail.com']);
+    // setEmails(['zhangshiyuez@gmail.com']);
   };
 
   const handleSave = () => {
@@ -94,7 +94,7 @@ export default function CreateEventButton(
         'dateTime': eventEndTime.toISOString(),
         'timeZone': timeZone,
       },
-      'attendees': emails,
+      'attendees': studentEmail,
     };
     ApiCalendar.createEvent(event)
         .then((result) => {console.log(result)})
@@ -103,7 +103,7 @@ export default function CreateEventButton(
     setStartTime(new Date());
     setEndTime(new Date());
     setDescription('');
-    setEmails(['zhangshiyuez@gmail.com']);
+    // setEmails(['zhangshiyuez@gmail.com']);
     // setEmails([]);
   };
 

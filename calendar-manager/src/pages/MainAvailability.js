@@ -71,6 +71,8 @@ export default function MainAvailability() {
   const [professorsData, setProfessorsData] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
 
+  const [studentEmail, setStudentEmail] = useState([]);
+
   React.useEffect(() => {
     // SHIYUE:
     // From my understanding you are ttrying to get the "name" and
@@ -78,7 +80,7 @@ export default function MainAvailability() {
     // this is how I would do it. I'm a little confused because I
     // don't know when you load the student data.
     let professors = [],
-      students = [];
+      students = [],email = [];
 
     if (classData.professors) {
       classData.professors.map((uid, index) => {
@@ -111,7 +113,9 @@ export default function MainAvailability() {
                 name: doc.data().displayName,
                 availability: doc.data().availability,
               });
+              email.push({"email":doc.data().email});
               setStudentsData([...students]);
+              setStudentEmail([...email]);
             }
           })
           .catch(function (error) {
@@ -390,11 +394,14 @@ export default function MainAvailability() {
                 </List>
               </Paper>
             </Grid>
+            <Grid item xs={12} style={{ textAlign: "center" }}>
+              <CreateEventButton
+                classId={classId}
+                classesCollection={classesCollection}
+                studentEmail={studentEmail}
+              />
+            </Grid>
           </Grid>
-          <CreateEventButton
-            classId={classId}
-            classesCollection={classesCollection}
-          />
         </Container>
       </div>
     );
