@@ -28,11 +28,12 @@ export default function Profile() {
   const classes = useStyles();
   const { uid } = useParams();
   const userData = useFirestoreDocData(
-    useFirestore().collection("users").doc(uid)
+    useFirestore().collection("users").doc(user.uid)
   );
 
   if (!user) {
     history.push("/login");
+    return null;
   } else {
     return (
       <div className="prof_bg">
@@ -58,7 +59,7 @@ export default function Profile() {
               </Typography>
             </Grid>
             <Grid item xs={12} style={{ marginLeft: "0px" }}>
-              <Availability uid={uid} />
+              <Availability uid={user.uid} />
             </Grid>
           </Grid>
         </Box>
@@ -66,3 +67,4 @@ export default function Profile() {
     );
   }
 }
+
