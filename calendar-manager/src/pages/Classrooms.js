@@ -50,6 +50,7 @@ function Classrooms() {
   }
   const classesCollection = useFirestore().collection("classes");
   const usersCollection = useFirestore().collection("users");
+
   const classes = setFirestoreDocData(
     usersCollection.doc(user ? user.uid : uid)
   ).classCodes;
@@ -71,17 +72,21 @@ function Classrooms() {
   };
 
   const deleteClass = (i) => {
-    // CASE: prof is the one deleting the class
+    // i: classId
+
     const docRef = classesCollection.doc(i);
     docRef
       .get()
       .then(function (doc) {
         if (doc.exists) {
           let students = doc.data().students;
+
+          // remove from the class array
           for (var j = 0; j < students.length; j++) {
             deleteFromClassArray(students[j], i);
           }
 
+          // CASE: prof is the one deleting the class
           if (doc.data().professors[0] === user.uid) {
             firestore
               .collection("classes")
@@ -93,6 +98,18 @@ function Classrooms() {
               .catch(function (error) {
                 console.error("Error removing document: ", error);
               });
+          } else {
+              console.log(students)
+              console.log(students.filter((stu) => stu !== user.uid))
+            firestore
+              .collection("classes")
+              .doc(i)
+              .update({
+                students: students.filter((stu) => stu !== user.uid)
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
           }
         }
       })
@@ -100,7 +117,7 @@ function Classrooms() {
         console.log("Error getting document:", error);
       });
 
-    // delete it from the array
+    // delete it from the class array
     deleteFromClassArray(user.uid, i);
   };
 
