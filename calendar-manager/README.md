@@ -1,15 +1,18 @@
-# Chronolo-geese
+# Chronolo-Geese
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ### Git organized. Git on time. 
 
-![Landing](https://u.cubeupload.com/cdalangin/95690288924e83000be4.png)
+![Schedule](https://github.com/MLH-Fellowship/Chronolo-Geese/blob/main/calendar-manager/src/assets/chonolo-geese.gif)
+
 
 Chronolo-Geese is the best schedule conflict manager for students. It is a simple and intuitive app that lets users input their availability within 7 days through a grid-based schedule selector. Once combined with other users, these schedules will create a heatmap that visualizes the most optimal time to meet up for group projects, study sessions, or office hours with teachers. The darker the color in the heatmap, the more people are available. All users will be able to create an account and provide their availability, which they are free to edit at any time.
 
-![Schedule](https://u.cubeupload.com/cdalangin/5daScreenshot2020101200.jpg)
 
 ## Motivation
 It can be a challenge to agree on a specific time to meet up and collaborate on a school project, especially since everything is virtual now. Just as we were working on this project, it was a challenge for us to meet up with our varying schedules. We were hoping that this app would help with that issue, and become just as useful for all the students trying to adjust to the virtual school set up. 
+
 
 ## Mockup
 ![Landing](https://u.cubeupload.com/cdalangin/Screenshot2020101200.jpg)
@@ -23,7 +26,9 @@ It can be a challenge to agree on a specific time to meet up and collaborate on 
 - [React Schedule Tracker](https://github.com/bibekg/react-schedule-selector) for the availability tracker
 - [Sky](https://github.com/lucagez/sky) for the animations in the landing page
 
+
 ## [Try it here!](https://chronolo-geese.web.app/)
+
 
 ## Made with ❤️ by:
 | Cirill Dalangin | Clara Chick | Pablo Domínguez Durán | Shiyue Zhang |

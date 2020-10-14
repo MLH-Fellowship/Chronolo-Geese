@@ -13,6 +13,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import {
   useFirestore,
@@ -24,7 +26,7 @@ import * as firebase from "firebase/app";
 
 import Navbar from "../common/Navbar";
 import "../styles/Classrooms.css";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -43,18 +45,64 @@ function Classrooms() {
   const history = useHistory();
   const user = useUser();
   const { uid } = useParams();
-
+  if (!user) {
+    history.push("/home");
+  }
   const classesCollection = useFirestore().collection("classes");
   const usersCollection = useFirestore().collection("users");
-  const classes = setFirestoreDocData(usersCollection.doc(uid)).classCodes;
+  const classes = setFirestoreDocData(usersCollection.doc(user ? user.uid : uid)).classCodes;
 
   const styles = useStyles();
 
   const firestore = useFirestore();
 
-  if (!user) {
-    history.push("/home");
-  }
+  
+
+  const deleteFromClassArray = (user, classCode) => {
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        classCodes: classes.filter((el) => el.code !== classCode),
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const deleteClass = (i) => {
+    // CASE: prof is the one deleting the class
+    const docRef = classesCollection.doc(i);
+    docRef
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          let students = doc.data().students;
+          for (var j = 0; j < students.length; j++) {
+            deleteFromClassArray(students[j], i);
+          }
+
+          if (doc.data().professors[0] === user.uid) {
+            firestore
+              .collection("classes")
+              .doc(i)
+              .delete()
+              .then(function () {
+                console.log("Document successfully deleted!");
+              })
+              .catch(function (error) {
+                console.error("Error removing document: ", error);
+              });
+          }
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+
+    // delete it from the array
+    deleteFromClassArray(user.uid, i);
+  };
 
   const addClass = () => {
     let id = "";
@@ -62,12 +110,12 @@ function Classrooms() {
       .collection("classes")
       .add({
         title: className,
-        professors: [uid],
-        students: [uid],
+        professors: [user.uid],
+        students: [user.uid],
       })
       .then((pushed_user) => {
         id = pushed_user.w_.path.segments[1];
-        usersCollection.doc(uid).update({
+        usersCollection.doc(user.uid).update({
           classCodes: classes.concat({ code: id, name: className }),
         });
       });
@@ -80,9 +128,9 @@ function Classrooms() {
       .get()
       .then(function (doc) {
         if (doc.exists) {
-          console.log(doc.data());
+          // console.log(doc.data());
           docRef.update({
-            students: firebase.firestore.FieldValue.arrayUnion(uid),
+            students: firebase.firestore.FieldValue.arrayUnion(user.uid),
           });
           usersCollection.doc(user.uid).update({
             classCodes: firebase.firestore.FieldValue.arrayUnion({
@@ -159,15 +207,26 @@ function Classrooms() {
         <div>
           <Grid container spacing={5}>
             <Grid item className="cont">
+              <Typography variant="h2" style={{ color: "#E0B1CB", textAlign: "center" }}>
+                <b>Classrooms:</b>
+              </Typography>
               <div className="paper_list">
-                <Typography variant="h5" style={{ color: "#E0B1CB" }}>
-                  <b>CLASSROOMS:</b>
-                </Typography>
                 <Paper>
                   <List className="ov" component="nav" aria-label="classNames">
                     {classes.map((name) => (
-                      <ListItem button>
-                        <ListItemText primary={name.name + " / " + name.code} />
+                      <ListItem key={name.code}>
+                        <ListItem key={name.code + "1"} button>
+                          <ListItemText
+                            primary={name.name + " / " + name.code}
+                          />
+                        </ListItem>
+                        <IconButton
+                          onClick={() => deleteClass(name.code)}
+                          edge="end"
+                          aria-label="delete"
+                        >
+                          <DeleteIcon />
+                        </IconButton>
                       </ListItem>
                     ))}
                   </List>
@@ -176,7 +235,10 @@ function Classrooms() {
             </Grid>
             <Grid item className="cont">
               <div className="paper_button">
-                <img alt="classroom-logo" src={require("../assets/classroom.svg")} />
+                <img
+                  alt="classroom-logo"
+                  src={require("../assets/classroom.svg")}
+                />
                 <Button
                   variant="contained"
                   disableElevation
