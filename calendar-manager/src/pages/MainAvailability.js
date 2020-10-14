@@ -68,7 +68,7 @@ export default function MainAvailability() {
 
   const [studentEmail, setStudentEmail] = useState([]);
 
-  React.useEffect(() => {
+  function loadData() {
     let professors = [],
       students = [],
       email = [];
@@ -114,7 +114,9 @@ export default function MainAvailability() {
           });
       });
     }
-  }, [classId]);
+  }
+
+  React.useEffect(loadData, [classId]);
 
   // make array of intervals once the page loads. Size: 28x7 (28 chunks of time from 8am to 9:30pm x 7 days)
   const [weekIntervals, setWeekIntervals] = useState([]);
@@ -169,9 +171,9 @@ export default function MainAvailability() {
 
   // Effect matches the time interval of availability from students and professor
   // Proccess: professor/student -> availability -> isBetween any of the intervals of weekIntervals
-
+  
   // TODO: Improve algorithm (it's not fancy at all :p)
-  React.useEffect(() => {
+  function matchInterval() {
     if (
       professorsData.length > 0 &&
       studentsData.length > 0 &&
@@ -189,20 +191,22 @@ export default function MainAvailability() {
                   "[)"
                 )
               ) {
-                console.log(
-                  student.name,
-                  `${time.toDate()} is between ${weekIntervals[day][chunk]}`
-                );
+                // console.log(
+                //   student.name,
+                //   `${time.toDate()} is between ${weekIntervals[day][chunk]}`
+                // );
                 studentsHeatmapDataMock[day][chunk]++;
-                return;
+                return null;
               }
             }
           }
+          return null;
         });
       });
       setStudentsHeatmapData(studentsHeatmapDataMock);
     }
-  }, [studentsData, professorsData]);
+  }
+  React.useEffect(matchInterval, [studentsData, professorsData]);
 
   const studentsHeatmap = (
     <HeatMapGrid
