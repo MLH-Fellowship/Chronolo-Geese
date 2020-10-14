@@ -30,7 +30,9 @@ It can be a challenge to agree on a specific time to meet up and collaborate on 
 - [Sound React Hook](https://joshwcomeau.com/react/announcing-use-sound-react-hook/) for the Easter egg 😉
 
 
-## [Try it here!](https://chronolo-geese.web.app/)
+## Check it Out!
+Deployed At: https://chronolo-geese.web.app/
+Devpost: https://devpost.com/software/chronolo-geese
 
 
 ## Made with ❤️ by:
