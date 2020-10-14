@@ -17,12 +17,9 @@ import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import { HeatMapGrid } from "react-grid-heatmap";
+import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
 
 import "../styles/MainAvailability.css";
 import Navbar from "../common/Navbar";
@@ -30,7 +27,7 @@ import Navbar from "../common/Navbar";
 /**
  * @return {ReactElement}
  */
-
+dayjs.extend(isBetween);
 const useStyles = makeStyles((theme) => ({
   classCodes: {
     color: "#5E548E",
@@ -57,12 +54,6 @@ export default function MainAvailability() {
   const classes = useStyles();
 
   const user = useUser();
-  const [day, setDay] = useState("Monday");
-  const handleDayChange = (e) => {
-    //   console.log(e);
-    setDay(e.target.value);
-  };
-
   const classData = useFirestoreDocData(
     useFirestore().collection("classes").doc(classId)
   );
@@ -71,36 +62,12 @@ export default function MainAvailability() {
   const [professorsData, setProfessorsData] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
 
-  // const getUserData = (uid) => {
-  //   const docRef = usersCollection.doc(uid);
-  //   // HELP HERE @SHIYUE
-  //   // const docRef = classesCollection.doc(classId);
-  //   docRef
-  //     .get()
-  //     .then(function (doc) {
-  //       if (doc.exists) {
-  //         console.log(doc.data());
-  //       }
-  //     })
-  //     .catch(function (error) {
-  //       console.log("Error getting document:", error);
-  //     });
-  //   // docRef.get().then((doc) => console.log("user data", doc.data))
-
-  //   // return {displayName: userData.displayName, availability: [...dateTime]};
-  // };
-  // const addProffesorData = (data) => {
-  //   //SHIYUE: I am not sure what
-  //   setProfesorData([...profesorData, data])
-  // }
-
   React.useEffect(() => {
     // SHIYUE:
     // From my understanding you are ttrying to get the "name" and
     // "availability" of evey user in professors field. So I think
     // this is how I would do it. I'm a little confused because I
     // don't know when you load the student data.
-    console.log("proffessor", classData.professors[0]);
     let professors = [],
       students = [];
 
@@ -144,23 +111,112 @@ export default function MainAvailability() {
       });
     }
   }, [classId]);
-  
-  console.log("students", studentsData, "professors", professorsData)
+
   // const [teacherSchedule, setTeacherSchedule] = useState([]);
+  // make array of intervals once the page loads. Size: 28x7 (28 chunks of time from 8am to 9:30pm x 7 days)
+  const [weekIntervals, setWeekIntervals] = useState([]);
+  React.useEffect(() => {
+    let today = dayjs();
+    const intervals = [];
+    for (let day = 0; day < 7; day++) {
+      const dayChunks = [];
+      for (let chunk = 0; chunk < 28; chunk++) {
+        dayChunks.push(
+          dayjs()
+            .startOf("day")
+            .add(day, "day")
+            .add(8, "hour")
+            .add(chunk * 0.5 * 60, "minute")
+        );
+      }
+      intervals.push(dayChunks);
+    }
+    setWeekIntervals([...intervals]);
+  }, []);
 
-  const xLabels = new Array(24).fill(0).map((_, i) => `${i}`);
+  // TODO: make labels dynamic (right now time's not show correctly)
+  const xLabels = new Array(28).fill(0).map((_, i) => `${i}`);
   const yLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
-  const data = new Array(yLabels.length)
+  
+  // TODO: Find better way to not have professorsHeatmapDataMock AND professorsHeatmapData state.
+  //    I think it can be done in an unique variable
+  let professorsHeatmapDataMock = new Array(yLabels.length)
     .fill(0)
-    .map(() =>
-      new Array(xLabels.length)
-        .fill(0)
-        .map(() => Math.floor(Math.random() * 5 + 5))
-    );
+    .map(() => new Array(xLabels.length).fill(0));
+  let studentsHeatmapDataMock = new Array(yLabels.length)
+    .fill(0)
+    .map(() => new Array(xLabels.length).fill(0));
+  const [professorsHeatmapData, setProfessorsHeatmapData] = useState(
+    professorsHeatmapDataMock
+  );
+  const [studentsHeatmapData, setStudentsHeatmapData] = useState(
+    studentsHeatmapDataMock
+  );
 
-  const heatmap = (
+  // Effect matches the time interval of availability from students and professor
+  // Proccess: professor/student -> availability -> isBetween any of the intervals of weekIntervals
+
+  // TODO: Improve algorithm (it's not fancy at all :p)
+  React.useEffect(() => {
+    if (
+      professorsData.length > 0 &&
+      studentsData.length > 0 &&
+      weekIntervals.length > 0
+    ) {
+      professorsData.map((professor) => {
+        // console.log(dayjs(professor.availability[0].toDate()));
+        professor.availability.map((time) => {
+          for (let day = 0; day < 7; day++) {
+            for (let chunk = 0; chunk < 27; chunk++) {
+              if (
+                dayjs(time.toDate()).isBetween(
+                  weekIntervals[day][chunk],
+                  weekIntervals[day][chunk + 1],
+                  "minute",
+                  "[)"
+                )
+              ) {
+                console.log(
+                  `${time.toDate()} is between ${weekIntervals[day][chunk]}`
+                );
+                professorsHeatmapDataMock[day][chunk]++;
+                return;
+              }
+            }
+          }
+        });
+      });
+      setProfessorsHeatmapData(professorsHeatmapDataMock);
+      studentsData.map((student) => {
+        student.availability.map((time) => {
+          for (let day = 0; day < 7; day++) {
+            for (let chunk = 0; chunk < 27; chunk++) {
+              if (
+                dayjs(time.toDate()).isBetween(
+                  weekIntervals[day][chunk],
+                  weekIntervals[day][chunk + 1],
+                  "minute",
+                  "[)"
+                )
+              ) {
+                console.log(
+                  student.name,
+                  `${time.toDate()} is between ${weekIntervals[day][chunk]}`
+                );
+                studentsHeatmapDataMock[day][chunk]++;
+                return;
+              }
+            }
+          }
+        });
+      });
+      setStudentsHeatmapData(studentsHeatmapDataMock);
+    }
+  }, [studentsData, professorsData]);
+
+  const professorsHeatmap = (
     <HeatMapGrid
-      data={data}
+      data={professorsHeatmapData}
       xLabels={xLabels}
       yLabels={yLabels}
       // Reder cell with tooltip
@@ -182,8 +238,38 @@ export default function MainAvailability() {
         color: `rgb(0, 0, 0, ${ratio / 2 + 0.4})`,
       })}
       cellHeight="1.5rem"
-      xLabelsPos="bottom"
-      onClick={(x, y) => alert(`Clicked (${x}, ${y})`)}
+      xLabelsPos="top"
+      // onClick={(x, y) => alert(`Clicked (${x}, ${y})`)}
+      // yLabelsPos="right"
+      // square
+    />
+  );
+  const studentsHeatmap = (
+    <HeatMapGrid
+      data={studentsHeatmapData}
+      xLabels={xLabels}
+      yLabels={yLabels}
+      // Reder cell with tooltip
+      cellRender={(x, y, value) => (
+        <div title={`Pos(${x}, ${y}) = ${value}`}>{value}</div>
+      )}
+      xLabelsStyle={(index) => ({
+        color: index % 2 ? "transparent" : "#5e548e",
+        fontSize: ".65rem",
+      })}
+      yLabelsStyle={() => ({
+        fontSize: ".65rem",
+        textTransform: "uppercase",
+        color: "#5e548e",
+      })}
+      cellStyle={(_x, _y, ratio) => ({
+        background: `rgb(224, 177, 203, ${ratio})` /*rgb(224, 177, 203);*/,
+        fontSize: ".7rem",
+        color: `rgb(0, 0, 0, ${ratio / 2 + 0.4})`,
+      })}
+      cellHeight="1.5rem"
+      xLabelsPos="top"
+      // onClick={(x, y) => alert(`Clicked (${x}, ${y})`)}
       // yLabelsPos="right"
       // square
     />
@@ -208,23 +294,6 @@ export default function MainAvailability() {
               <Typography variant="h6" className={classes.cent}>
                 <b>{classData.title}</b>
               </Typography>
-              {/* <FormControl variant="filled" className={classes.formControl}>
-                <Select
-                  value={day}
-                  onChange={handleDayChange}
-                  displayEmpty
-                  // className={classes.selectEmpty}
-                  inputProps={{ "aria-label": "Without label" }}
-                >
-                  <MenuItem value={"Monday"}>Monday</MenuItem>
-                  <MenuItem value={"Tuesday"}>Tuesday</MenuItem>
-                  <MenuItem value={"Wednesday"}>Wednesday</MenuItem>
-                  <MenuItem value={"Thursday"}>Thursday</MenuItem>
-                  <MenuItem value={"Friday"}>Friday</MenuItem>
-                  <MenuItem value={"Saturday"}>Saturday</MenuItem>
-                  <MenuItem value={"Sunday"}>Sunday</MenuItem>
-                </Select>
-              </FormControl> */}
             </Grid>
             <Grid
               item
@@ -256,20 +325,16 @@ export default function MainAvailability() {
                     padding: "0.5rem 0",
                   }}
                 >
-                  {heatmap}
+                  {professorsHeatmap}
                 </div>
               </Paper>
-              <Paper style={{margin:"1rem 0"}}>
+              <Paper style={{ margin: "1rem 0" }}>
                 <List>
-                  {
-                    professorsData.map( (professor, i) => (
-                      <ListItem key={i}>
-                        <ListItemText
-                            primary={professor.name}
-                          />
-                      </ListItem>
-                    ))
-                  }
+                  {professorsData.map((professor, i) => (
+                    <ListItem key={i}>
+                      <ListItemText primary={professor.name} />
+                    </ListItem>
+                  ))}
                 </List>
               </Paper>
             </Grid>
@@ -303,20 +368,16 @@ export default function MainAvailability() {
                     padding: "0.5rem 0",
                   }}
                 >
-                  {heatmap}
+                  {studentsHeatmap}
                 </div>
               </Paper>
-              <Paper style={{margin:"1rem 0"}}>
+              <Paper style={{ margin: "1rem 0" }}>
                 <List>
-                  {
-                    studentsData.map( (student, i) => (
-                      <ListItem key={i}>
-                        <ListItemText
-                            primary={student.name}
-                          />
-                      </ListItem>
-                    ))
-                  }
+                  {studentsData.map((student, i) => (
+                    <ListItem key={i}>
+                      <ListItemText primary={student.name} />
+                    </ListItem>
+                  ))}
                 </List>
               </Paper>
             </Grid>
