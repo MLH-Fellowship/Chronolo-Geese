@@ -4,7 +4,7 @@
 
 ### Git organized. Git on time. 
 
-![Schedule](https://github.com/MLH-Fellowship/Chronolo-Geese/blob/update-readme/calendar-manager/src/assets/chonolo-geese.gif)
+![Schedule](https://github.com/MLH-Fellowship/Chronolo-Geese/blob/main/calendar-manager/src/assets/chonolo-geese.gif)
 
 
 Chronolo-Geese is the best schedule conflict manager for students. It is a simple and intuitive app that lets users input their availability within 7 days through a grid-based schedule selector. Once combined with other users, these schedules will create a heatmap that visualizes the most optimal time to meet up for group projects, study sessions, or office hours with teachers. The darker the color in the heatmap, the more people are available. All users will be able to create an account and provide their availability, which they are free to edit at any time.
