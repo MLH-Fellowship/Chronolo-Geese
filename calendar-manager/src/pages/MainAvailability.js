@@ -258,7 +258,7 @@ export default function MainAvailability() {
             </Grid>
             <Grid
               item
-              xs={2}
+              xs={3}
               style={{
                 textAlign: "center",
                 display: "flex",
@@ -278,7 +278,7 @@ export default function MainAvailability() {
                 <b>CLASS</b>
               </Typography>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={9}>
               <Paper className={styles.classCodes.paperBg} variant="outlined">
                 <div
                   style={{
