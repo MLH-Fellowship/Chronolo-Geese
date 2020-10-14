@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Checkbox from "@material-ui/core/Checkbox";
 
 import { useHistory } from "react-router-dom";
 import { useFirestore } from "reactfire";
@@ -14,7 +13,6 @@ function SignUp() {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
-  const [checked, setChecked] = useState(false);
   const [password, setPassword] = useState("");
 
   const history = useHistory();
@@ -49,7 +47,6 @@ function SignUp() {
       .catch(function (error) {
         // Handle Errors here.
         setError(error.message);
-        // return;
       });
     firebase.auth().onAuthStateChanged(async function (user) {
       if (user) {
@@ -63,7 +60,6 @@ function SignUp() {
                 availability: [],
                 classCodes: [],
                 email: user.email,
-                isStudent: !checked,
                 uid: user.uid,
               });
             }
@@ -110,14 +106,6 @@ function SignUp() {
           variant="outlined"
           type="password"
         />
-      </Grid>
-      <Grid item xs={12}>
-        <Checkbox
-          checked={checked}
-          onChange={(e) => setChecked(e.target.checked)}
-          inputProps={{ "aria-label": "primary checkbox" }}
-        />
-        Are you a professor?
       </Grid>
       <Grid item>
         <Button

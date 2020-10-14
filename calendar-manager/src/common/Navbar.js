@@ -13,8 +13,12 @@ import {
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
+
 import { useUser } from "reactfire";
 import * as firebase from "firebase";
+
+import useSound from "use-sound";
+import honk from "../assets/sfx_goose_honk_b_02.wav";
 
 export default function Navbar() {
   const [open, setOpen] = React.useState(false);
@@ -28,7 +32,6 @@ export default function Navbar() {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
 
@@ -45,15 +48,38 @@ export default function Navbar() {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
-
     prevOpen.current = open;
   }, [open]);
+
+  const [play] = useSound(honk);
 
   const history = useHistory();
   const user = useUser();
 
   if (!user) {
-    return <></>;
+    return (
+      <AppBar
+        style={{ background: "transparent", boxShadow: "none" }}
+        position="absolute"
+      >
+        <Toolbar>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
+            <img
+              onClick={function (event) {
+                play();
+                history.push("/home");
+              }}
+              alt="goose"
+              src={require("../assets/goose.png")}
+              style={{ height: "35px", width: "35px", margin: "auto" }}
+            />
+          </Typography>
+          <Button href={"/about"} color="inherit">
+            About
+          </Button>
+        </Toolbar>
+      </AppBar>
+    );
   }
 
   // logs the user out
@@ -73,7 +99,20 @@ export default function Navbar() {
       position="absolute"
     >
       <Toolbar>
-        <Typography variant="h6" style={{ flexGrow: 1 }}></Typography>
+        <Typography variant="h6" style={{ flexGrow: 1 }}>
+          <img
+            alt="goose"
+            onClick={function (event) {
+              play();
+              history.push("/home");
+            }}
+            src={require("../assets/goose.png")}
+            style={{ height: "35px", width: "35px", margin: "auto" }}
+          />
+        </Typography>
+        <Button href={"/about"} color="inherit">
+          About
+        </Button>
         <Button href={"/myclasses/" + user.uid} color="inherit">
           My Classrooms
         </Button>
