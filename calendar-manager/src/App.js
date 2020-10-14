@@ -8,6 +8,7 @@ import UserAvailability from "./pages/UserAvailability";
 import { FirebaseAppProvider } from "reactfire";
 import Classrooms from "./pages/Classrooms";
 import HowItWorks from "./pages/HowItWorks";
+import Loading from "./pages/Loading"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -25,7 +26,7 @@ const firebaseConfig = {
 function App() {
   return (
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-      <Suspense fallback={<p>loading...</p>}>
+      <Suspense fallback={<Loading />}>
         <Router>
           <Switch>
             <Route path="/about">
