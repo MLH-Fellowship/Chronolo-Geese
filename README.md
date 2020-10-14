@@ -31,8 +31,8 @@ It can be a challenge to agree on a specific time to meet up and collaborate on 
 
 
 ## Check it Out!
-Deployed At: https://chronolo-geese.web.app/
-Devpost: https://devpost.com/software/chronolo-geese
+- Deployed At: https://chronolo-geese.web.app/
+- Devpost: https://devpost.com/software/chronolo-geese
 
 
 ## Made with ❤️ by:
