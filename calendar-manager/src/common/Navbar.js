@@ -73,7 +73,12 @@ export default function Navbar() {
       position="absolute"
     >
       <Toolbar>
-        <Typography variant="h6" style={{ flexGrow: 1 }}></Typography>
+        <Typography variant="h6" style={{ flexGrow: 1 }}>
+          <img alt="goose" src={require("../assets/goose.png")} style={{ height: "35px", width: "35px", margin: "auto" }} />
+        </Typography>
+        <Button href={"/about"} color="inherit">
+          About
+        </Button>
         <Button href={"/myclasses/" + user.uid} color="inherit">
           My Classrooms
         </Button>
@@ -121,6 +126,6 @@ export default function Navbar() {
           )}
         </Popper>
       </Toolbar>
-    </AppBar>
+    </AppBar >
   );
 }
