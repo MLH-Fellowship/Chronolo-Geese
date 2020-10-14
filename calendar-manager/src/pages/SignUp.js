@@ -111,14 +111,6 @@ function SignUp() {
           type="password"
         />
       </Grid>
-      <Grid item xs={12}>
-        <Checkbox
-          checked={checked}
-          onChange={(e) => setChecked(e.target.checked)}
-          inputProps={{ "aria-label": "primary checkbox" }}
-        />
-        Are you a professor?
-      </Grid>
       <Grid item>
         <Button
           onClick={() => submit()}
