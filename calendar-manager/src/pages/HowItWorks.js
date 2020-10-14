@@ -1,12 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Grid,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { Grid, Paper, Typography } from "@material-ui/core";
 import Navbar from "../common/Navbar";
 import Sky from "react-sky";
+
 import i1 from "../assets/clock.png";
 import i2 from "../assets/timetable.png";
 import i3 from "../assets/goose.png";
@@ -32,7 +29,7 @@ const info = [
 const pics = [
   require("../assets/signup.jpg"),
   require("../assets/availability.jpg"),
-  require("../assets/signup.jpg"),
+  require("../assets/joinclassroom.PNG"),
   require("../assets/heatmap.png"),
 ];
 

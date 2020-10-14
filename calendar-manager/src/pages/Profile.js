@@ -3,9 +3,8 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-// import { makeStyles } from "@material-ui/core/styles";
 
-import { useHistory, useParams} from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import { useFirestore, useUser, useFirestoreDocData } from "reactfire";
 
@@ -13,26 +12,24 @@ import Navbar from "../common/Navbar";
 import Availability from "../profile/Availability";
 import "../styles/Profile.css";
 
-// const useStyles = makeStyles((theme) => ({
-//   classCodes: {
-//     color: "#5E548E",
-//   },
-// }));
-
 /**
  * @return {ReactElement} Displays profile page
  */
 export default function Profile() {
   const history = useHistory();
   const user = useUser();
-  // const classes = useStyles();
   const { uid } = useParams();
+
   if (!user) {
     history.push("/home");
   }
+
   const userData = useFirestoreDocData(
-    useFirestore().collection("users").doc(user ? user.uid : uid)
+    useFirestore()
+      .collection("users")
+      .doc(user ? user.uid : uid)
   );
+  
   return (
     <div className="prof_bg">
       <Navbar />
@@ -46,10 +43,9 @@ export default function Profile() {
               {user.email}
             </Typography>
           </Grid>
-          <Grid item xs={6} style={{ textAlign: "center" }} >
+          <Grid item xs={6} style={{ textAlign: "center" }}>
             <img alt="classroom-logo" src={require("../assets/clock.png")} />
           </Grid>
-
 
           <Grid item xs={12}>
             <Typography variant="h3" style={{ textAlign: "center" }}>
@@ -64,5 +60,3 @@ export default function Profile() {
     </div>
   );
 }
-
-

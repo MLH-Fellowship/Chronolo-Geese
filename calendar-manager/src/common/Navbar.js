@@ -13,8 +13,8 @@ import {
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
-import { useUser } from "reactfire";
 
+import { useUser } from "reactfire";
 import * as firebase from "firebase";
 
 import useSound from "use-sound";

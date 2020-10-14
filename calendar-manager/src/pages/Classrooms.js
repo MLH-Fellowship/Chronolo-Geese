@@ -50,13 +50,13 @@ function Classrooms() {
   }
   const classesCollection = useFirestore().collection("classes");
   const usersCollection = useFirestore().collection("users");
-  const classes = setFirestoreDocData(usersCollection.doc(user ? user.uid : uid)).classCodes;
+  const classes = setFirestoreDocData(
+    usersCollection.doc(user ? user.uid : uid)
+  ).classCodes;
 
   const styles = useStyles();
 
   const firestore = useFirestore();
-
-  
 
   const deleteFromClassArray = (user, classCode) => {
     firestore
@@ -207,7 +207,10 @@ function Classrooms() {
         <div>
           <Grid container spacing={5}>
             <Grid item className="cont">
-              <Typography variant="h2" style={{ color: "#E0B1CB", textAlign: "center" }}>
+              <Typography
+                variant="h2"
+                style={{ color: "#E0B1CB", textAlign: "center" }}
+              >
                 <b>Classrooms:</b>
               </Typography>
               <div className="paper_list">

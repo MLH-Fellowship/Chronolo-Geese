@@ -47,7 +47,6 @@ function SignUp() {
       .catch(function (error) {
         // Handle Errors here.
         setError(error.message);
-        // return;
       });
     firebase.auth().onAuthStateChanged(async function (user) {
       if (user) {
