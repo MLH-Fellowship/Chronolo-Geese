@@ -24,16 +24,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const info = [
-  "1. Input your Availability.",
-  "2. Join your classroom.",
-  "3. See your classmates' availability",
-  "4. Schedule a meeting!",
+  "Create an account.",
+  "Drop your Availability.",
+  "Add Classroom.",
+  "Schedule a meeting!",
 ];
 const pics = [
+  require("../assets/signup.jpg"),
   require("../assets/availability.jpg"),
-  require("../assets/availability.jpg"),
-  require("../assets/availability.jpg"),
-  require("../assets/availability.jpg"),
+  require("../assets/signup.jpg"),
+  require("../assets/heatmap.png"),
 ];
 
 export default function HowItWorks() {
@@ -63,7 +63,7 @@ export default function HowItWorks() {
           >
             {info.map((val, index) => (
               <Grid item>
-                <Paper className={classes.paper} elevation={3}>
+                <Paper className={classes.paper} elevation={4}>
                   <img alt={val} src={pics[index]} style={{ width: "100%" }} />
                   <Typography variant="h6" style={{ color: "#5e548e" }}>
                     {val}
