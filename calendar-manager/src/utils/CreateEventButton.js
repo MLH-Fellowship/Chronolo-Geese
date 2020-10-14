@@ -6,27 +6,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-// import Chip from '@material-ui/core/Chip';
-// import Paper from '@material-ui/core/Paper';
 import ApiCalendar from 'react-google-calendar-api';
 import DateFnsUtils from '@date-io/date-fns';
-// import Autocomplete from '@material-ui/lab/Autocomplete';
 import {DateTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
-// import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
-//   emails: {
-//     display: 'flex',
-//     justifyContent: 'center',
-//     flexWrap: 'wrap',
-//     listStyle: 'none',
-//     padding: theme.spacing(0.5),
-//     margin: 0,
-//     minHeight: '40px',
-//   },
-//   chip: {
-//     margin: theme.spacing(0.5),
-//   },
   textField: {
     marginRight: theme.spacing(2),
     width: 200,
@@ -34,16 +18,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * @param {string} gameName game name
- * @param {string} gameId game id
- * @param {func} createRoomLink Creates game room
- * @param {func} deleteRoom delete room from database
- * @param {object} usersCollection reference to users collection
- * @return {ReactElement} Add game event button
+ * @return {ReactElement} Add meeting event button
  */
 export default function CreateEventButton(
     {classId, classesCollection, studentEmail}) {
-      // console.log(studentEmail);
   const classes = useStyles();
   const moment = require('moment-timezone');
   const timeZone = moment.tz.guess();
@@ -52,9 +30,6 @@ export default function CreateEventButton(
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
   const [description, setDescription] = useState('');
-//   const [roomId, setRoomId] = useState('');
-//   let [email, setEmail] = useState([]);
-  // const [emails, setEmails] = useState(['zhangshiyuez@gmail.com']);
   const user = useUser();
   const classData = useFirestoreDocData(classesCollection.doc(classId));
 
@@ -69,8 +44,6 @@ export default function CreateEventButton(
     setStartTime(new Date());
     setEndTime(new Date());
     setDescription('');
-    // setEmail('');
-    // setEmails(['zhangshiyuez@gmail.com']);
   };
 
   const handleSave = () => {
@@ -103,11 +76,7 @@ export default function CreateEventButton(
     setStartTime(new Date());
     setEndTime(new Date());
     setDescription('');
-    // setEmails(['zhangshiyuez@gmail.com']);
-    // setEmails([]);
   };
-
-//   useEffect(loadEmails, [clear, initialize]);
 
   return (
     <div>

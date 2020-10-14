@@ -12,11 +12,12 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Button from "@material-ui/core/Button";
+
 import { HeatMapGrid } from "react-grid-heatmap";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
@@ -24,7 +25,7 @@ import isBetween from "dayjs/plugin/isBetween";
 import "../styles/MainAvailability.css";
 import Navbar from "../common/Navbar";
 import CreateEventButton from "../utils/CreateEventButton";
-import { Button } from "@material-ui/core";
+// import { Button } from "@material-ui/core";
 
 /**
  * @return {ReactElement}
@@ -48,12 +49,17 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
+  button: {
+    color: "#5e548e",
+    background: "#E0B1CB",
+    margin: "10px",
+  },
 }));
 
 export default function MainAvailability() {
   const history = useHistory();
   const { classId } = useParams();
-  const classes = useStyles();
+  const styles = useStyles();
 
   const user = useUser();
   const [day, setDay] = useState("Monday");
@@ -74,11 +80,6 @@ export default function MainAvailability() {
   const [studentEmail, setStudentEmail] = useState([]);
 
   React.useEffect(() => {
-    // SHIYUE:
-    // From my understanding you are ttrying to get the "name" and
-    // "availability" of evey user in professors field. So I think
-    // this is how I would do it. I'm a little confused because I
-    // don't know when you load the student data.
     let professors = [],
       students = [],email = [];
 
@@ -125,7 +126,6 @@ export default function MainAvailability() {
     }
   }, [classId]);
 
-  // const [teacherSchedule, setTeacherSchedule] = useState([]);
   // make array of intervals once the page loads. Size: 28x7 (28 chunks of time from 8am to 9:30pm x 7 days)
   const [weekIntervals, setWeekIntervals] = useState([]);
   React.useEffect(() => {
@@ -148,7 +148,9 @@ export default function MainAvailability() {
   }, []);
 
   // TODO: make labels dynamic (right now time's not show correctly)
-  const xLabels = new Array(33).fill(0).map((_, i) => `${Math.floor(i/2) + 8} : 00`);
+  const xLabels = new Array(33)
+    .fill(0)
+    .map((_, i) => `${Math.floor(i / 2) + 8} : 00`);
   const yLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   // TODO: Find better way to not have professorsHeatmapDataMock AND professorsHeatmapData state.
@@ -176,30 +178,6 @@ export default function MainAvailability() {
       studentsData.length > 0 &&
       weekIntervals.length > 0
     ) {
-      professorsData.map((professor) => {
-        // console.log(dayjs(professor.availability[0].toDate()));
-        professor.availability.map((time) => {
-          for (let day = 0; day < 8; day++) {
-            for (let chunk = 0; chunk < 33; chunk++) {
-              if (
-                dayjs(time.toDate()).isBetween(
-                  weekIntervals[day][chunk],
-                  weekIntervals[day][chunk + 1],
-                  "minute",
-                  "[)"
-                )
-              ) {
-                console.log(
-                  `${time.toDate()} is between ${weekIntervals[day][chunk]}`
-                );
-                professorsHeatmapDataMock[day][chunk]++;
-                return;
-              }
-            }
-          }
-        });
-      });
-      setProfessorsHeatmapData(professorsHeatmapDataMock);
       studentsData.map((student) => {
         student.availability.map((time) => {
           for (let day = 0; day < 8; day++) {
@@ -226,37 +204,7 @@ export default function MainAvailability() {
       setStudentsHeatmapData(studentsHeatmapDataMock);
     }
   }, [studentsData, professorsData]);
-
-  const professorsHeatmap = (
-    <HeatMapGrid
-      data={professorsHeatmapData}
-      xLabels={xLabels}
-      yLabels={yLabels}
-      // Reder cell with tooltip
-      cellRender={(x, y, value) => (
-        <div title={`Pos(${x}, ${y}) = ${value}`}>{value}</div>
-      )}
-      xLabelsStyle={(index) => ({
-        color: index % 2 ? "transparent" : "#5e548e",
-        fontSize: ".65rem",
-      })}
-      yLabelsStyle={() => ({
-        fontSize: ".65rem",
-        textTransform: "uppercase",
-        color: "#5e548e",
-      })}
-      cellStyle={(_x, _y, ratio) => ({
-        background: `rgb(224, 177, 203, ${ratio})` /*rgb(224, 177, 203);*/,
-        fontSize: ".7rem",
-        color: `rgb(0, 0, 0, ${ratio / 2 + 0.4})`,
-      })}
-      cellHeight="1.5rem"
-      xLabelsPos="top"
-      // onClick={(x, y) => alert(`Clicked (${x}, ${y})`)}
-      // yLabelsPos="right"
-      // square
-    />
-  );
+  
   const studentsHeatmap = (
     <HeatMapGrid
       data={studentsHeatmapData}
@@ -301,16 +249,16 @@ export default function MainAvailability() {
             style={{ margin: "1vh", marginTop: "10vh" }}
           >
             <Grid item xs={12} style={{ textAlign: "center" }}>
-              <Typography variant="h5" className={classes.cent}>
+              <Typography variant="h5" className={styles.classCodes.cent}>
                 <b>CLASSROOM: {classId}</b>
               </Typography>
-              <Typography variant="h6" className={classes.cent}>
+              <Typography variant="h6" className={styles.classCodes.cent}>
                 <b>{classData.title}</b>
               </Typography>
             </Grid>
             <Grid
               item
-              xs={3}
+              xs={2}
               style={{
                 textAlign: "center",
                 display: "flex",
@@ -318,50 +266,7 @@ export default function MainAvailability() {
                 justifyContent: "center",
               }}
             >
-              <Typography variant="h3" className={classes.cent}>
-                <PersonOutlineIcon
-                  aria-label="Teacher Icon"
-                  aria-controls="teacher-icon"
-                  color="inherit"
-                  fontSize="inherit"
-                />
-              </Typography>
-              <Typography variant="h5" className={classes.cent}>
-                <b>TEACHER</b>
-              </Typography>
-            </Grid>
-            <Grid item xs={9}>
-              <Paper className={classes.paperBg} variant="outlined">
-                <div
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem 0",
-                  }}
-                >
-                  {professorsHeatmap}
-                </div>
-              </Paper>
-              <Paper style={{ margin: "1rem 0" }}>
-                <List>
-                  {professorsData.map((professor, i) => (
-                    <ListItem key={i}>
-                      <ListItemText primary={professor.name} />
-                    </ListItem>
-                  ))}
-                </List>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              xs={3}
-              style={{
-                textAlign: "center",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <Typography variant="h3" className={classes.cent}>
+              <Typography variant="h3" className={styles.classCodes}>
                 <PeopleOutlineIcon
                   aria-label="Teacher Icon"
                   aria-controls="teacher-icon"
@@ -369,12 +274,12 @@ export default function MainAvailability() {
                   fontSize="inherit"
                 />
               </Typography>
-              <Typography variant="h5" className={classes.cent}>
+              <Typography variant="h5" className={styles.classCodes}>
                 <b>CLASS</b>
               </Typography>
             </Grid>
-            <Grid item xs={9}>
-              <Paper className={classes.paperBg} variant="outlined">
+            <Grid item xs={8}>
+              <Paper className={styles.classCodes.paperBg} variant="outlined">
                 <div
                   style={{
                     width: "100%",
