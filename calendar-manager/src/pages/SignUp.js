@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Checkbox from "@material-ui/core/Checkbox";
+// import Checkbox from "@material-ui/core/Checkbox";
 
 import { useHistory } from "react-router-dom";
 import { useFirestore } from "reactfire";
