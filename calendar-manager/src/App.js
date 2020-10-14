@@ -26,12 +26,9 @@ const firebaseConfig = {
 function App() {
   return (
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-      <Suspense fallback={<p>loading...</p>}>
+      <Suspense fallback={<Loading />}>
         <Router>
           <Switch>
-            <Route path="/load">
-              <Loading />
-            </Route>
             <Route path="/about">
               <HowItWorks />
             </Route>
