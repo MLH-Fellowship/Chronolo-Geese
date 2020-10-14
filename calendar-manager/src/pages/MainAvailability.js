@@ -68,11 +68,8 @@ export default function MainAvailability() {
     setDay(e.target.value);
   };
   const classesCollection = useFirestore().collection("classes");
-  const classData = useFirestoreDocData(
-    classesCollection.doc(classId)
-  );
+  const classData = useFirestoreDocData(classesCollection.doc(classId));
   const usersCollection = useFirestore().collection("users");
-  
 
   const [professorsData, setProfessorsData] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
@@ -81,7 +78,8 @@ export default function MainAvailability() {
 
   React.useEffect(() => {
     let professors = [],
-      students = [],email = [];
+      students = [],
+      email = [];
 
     if (classData.professors) {
       classData.professors.map((uid, index) => {
@@ -114,7 +112,7 @@ export default function MainAvailability() {
                 name: doc.data().displayName,
                 availability: doc.data().availability,
               });
-              email.push({"email":doc.data().email});
+              email.push({ email: doc.data().email });
               setStudentsData([...students]);
               setStudentEmail([...email]);
             }
@@ -152,7 +150,21 @@ export default function MainAvailability() {
     .fill(0)
     .map((_, i) => `${Math.floor(i / 2) + 8}:00`);
 
-  const yLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const today = new Date();
+
+  const yLabels = [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+  ];
+  
+  for(var i = 0; i < 7; i ++){
+    yLabels[i] = today.getMonth() + "/" + (today.getDate() + i)
+  }
 
   // TODO: Find better way to not have professorsHeatmapDataMock AND professorsHeatmapData state.
   //    I think it can be done in an unique variable
@@ -205,7 +217,7 @@ export default function MainAvailability() {
       setStudentsHeatmapData(studentsHeatmapDataMock);
     }
   }, [studentsData, professorsData]);
-  
+
   const studentsHeatmap = (
     <HeatMapGrid
       data={studentsHeatmapData}
@@ -259,7 +271,7 @@ export default function MainAvailability() {
             </Grid>
             <Grid
               item
-              xs={3}
+              xs={2}
               style={{
                 textAlign: "center",
                 display: "flex",
@@ -279,7 +291,7 @@ export default function MainAvailability() {
                 <b>CLASS</b>
               </Typography>
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={8}>
               <Paper className={styles.classCodes.paperBg} variant="outlined">
                 <div
                   style={{
