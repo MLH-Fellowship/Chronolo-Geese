@@ -59,7 +59,7 @@ function Classrooms() {
 
   const firestore = useFirestore();
 
-  const deleteFromClassArray = (user, classCode) => {
+  const deleteFromCurrentStudentClassArray = (user, classCode) => {
     firestore
       .collection("users")
       .doc(user)
@@ -68,6 +68,33 @@ function Classrooms() {
       })
       .catch(function (error) {
         console.log(error);
+      });
+  };
+
+  const deleteFromArbitraryStudentClassArray = (user, classCode) => {
+    const docRef = usersCollection.doc(user);
+    docRef
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          let classes = doc.data().classCodes;
+
+          // remove from the class array
+          for (var j = 0; j < classes.length; j++) {
+            firestore
+              .collection("users")
+              .doc(user)
+              .update({
+                classCodes: classes.filter((el) => el.code !== classCode),
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
       });
   };
 
@@ -83,7 +110,7 @@ function Classrooms() {
 
           // remove from the class array
           for (var j = 0; j < students.length; j++) {
-            deleteFromClassArray(students[j], i);
+            deleteFromArbitraryStudentClassArray(students[j], i);
           }
 
           // CASE: prof is the one deleting the class
@@ -117,7 +144,7 @@ function Classrooms() {
       });
 
     // delete it from the class array
-    deleteFromClassArray(user.uid, i);
+    deleteFromCurrentStudentClassArray(user.uid, i);
   };
 
   const addClass = () => {
