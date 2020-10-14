@@ -1,5 +1,7 @@
 # Chronolo-geese
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ### Git organized. Git on time. 
 
 ![Landing](https://u.cubeupload.com/cdalangin/95690288924e83000be4.png)

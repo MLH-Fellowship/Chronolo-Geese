@@ -26,7 +26,7 @@ import * as firebase from "firebase/app";
 
 import Navbar from "../common/Navbar";
 import "../styles/Classrooms.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -44,19 +44,19 @@ function Classrooms() {
 
   const history = useHistory();
   const user = useUser();
-  // const { uid } = useParams();
-
+  const { uid } = useParams();
+  if (!user) {
+    history.push("/home");
+  }
   const classesCollection = useFirestore().collection("classes");
   const usersCollection = useFirestore().collection("users");
-  const classes = setFirestoreDocData(usersCollection.doc(user.uid)).classCodes;
+  const classes = setFirestoreDocData(usersCollection.doc(user ? user.uid : uid)).classCodes;
 
   const styles = useStyles();
 
   const firestore = useFirestore();
 
-  if (!user) {
-    history.push("/home");
-  }
+  
 
   const deleteFromClassArray = (user, classCode) => {
     firestore
