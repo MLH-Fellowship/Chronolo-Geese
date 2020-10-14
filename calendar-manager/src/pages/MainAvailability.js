@@ -118,9 +118,9 @@ export default function MainAvailability() {
   React.useEffect(() => {
     let today = dayjs();
     const intervals = [];
-    for (let day = 0; day < 7; day++) {
+    for (let day = 0; day < 8; day++) {
       const dayChunks = [];
-      for (let chunk = 0; chunk < 28; chunk++) {
+      for (let chunk = 0; chunk < 33; chunk++) {
         dayChunks.push(
           dayjs()
             .startOf("day")
@@ -135,8 +135,8 @@ export default function MainAvailability() {
   }, []);
 
   // TODO: make labels dynamic (right now time's not show correctly)
-  const xLabels = new Array(28).fill(0).map((_, i) => `${i}`);
-  const yLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+  const xLabels = new Array(33).fill(0).map((_, i) => `${Math.floor(i/2) + 8} : 00`);
+  const yLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   // TODO: Find better way to not have professorsHeatmapDataMock AND professorsHeatmapData state.
   //    I think it can be done in an unique variable
@@ -166,8 +166,8 @@ export default function MainAvailability() {
       professorsData.map((professor) => {
         // console.log(dayjs(professor.availability[0].toDate()));
         professor.availability.map((time) => {
-          for (let day = 0; day < 7; day++) {
-            for (let chunk = 0; chunk < 27; chunk++) {
+          for (let day = 0; day < 8; day++) {
+            for (let chunk = 0; chunk < 33; chunk++) {
               if (
                 dayjs(time.toDate()).isBetween(
                   weekIntervals[day][chunk],
@@ -189,8 +189,8 @@ export default function MainAvailability() {
       setProfessorsHeatmapData(professorsHeatmapDataMock);
       studentsData.map((student) => {
         student.availability.map((time) => {
-          for (let day = 0; day < 7; day++) {
-            for (let chunk = 0; chunk < 27; chunk++) {
+          for (let day = 0; day < 8; day++) {
+            for (let chunk = 0; chunk < 33; chunk++) {
               if (
                 dayjs(time.toDate()).isBetween(
                   weekIntervals[day][chunk],
@@ -203,9 +203,7 @@ export default function MainAvailability() {
                   student.name,
                   `${time.toDate()} is between ${weekIntervals[day][chunk]}`
                 );
-                if (day && chunk) {
-                  studentsHeatmapDataMock[day][chunk]++;
-                }
+                studentsHeatmapDataMock[day][chunk]++;
                 return;
               }
             }
