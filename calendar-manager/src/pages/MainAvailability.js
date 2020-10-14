@@ -137,7 +137,7 @@ export default function MainAvailability() {
   // TODO: make labels dynamic (right now time's not show correctly)
   const xLabels = new Array(28).fill(0).map((_, i) => `${i}`);
   const yLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
-  
+
   // TODO: Find better way to not have professorsHeatmapDataMock AND professorsHeatmapData state.
   //    I think it can be done in an unique variable
   let professorsHeatmapDataMock = new Array(yLabels.length)
@@ -203,7 +203,9 @@ export default function MainAvailability() {
                   student.name,
                   `${time.toDate()} is between ${weekIntervals[day][chunk]}`
                 );
-                studentsHeatmapDataMock[day][chunk]++;
+                if (day && chunk) {
+                  studentsHeatmapDataMock[day][chunk]++;
+                }
                 return;
               }
             }
