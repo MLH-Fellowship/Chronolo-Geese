@@ -61,11 +61,12 @@ export default function MainAvailability() {
     //   console.log(e);
     setDay(e.target.value);
   };
-
+  const classesCollection = useFirestore().collection("classes");
   const classData = useFirestoreDocData(
-    useFirestore().collection("classes").doc(classId)
+    classesCollection.doc(classId)
   );
   const usersCollection = useFirestore().collection("users");
+  
 
   const [profesorData, setProfesorData] = useState({name:"", availability:[]})
   const [studentsData, setstudentsData] = useState([]);
@@ -285,7 +286,10 @@ export default function MainAvailability() {
               </Paper>
             </Grid>
           </Grid>
-          <CreateEventButton />
+          <CreateEventButton
+            classId={classId}
+            classesCollection={classesCollection}
+          />
         </Container>
       </div>
     );
