@@ -48,8 +48,8 @@ export default function Profile() {
           </Grid>
 
           <Grid item xs={12}>
-            <Typography variant="h3" style={{ textAlign: "center" }}>
-              <b>Availability</b>:
+            <Typography variant="h4" style={{ textAlign: "center" }}>
+              <b>availability</b>:
             </Typography>
           </Grid>
           <Grid item xs={12} style={{ marginLeft: "0px" }}>

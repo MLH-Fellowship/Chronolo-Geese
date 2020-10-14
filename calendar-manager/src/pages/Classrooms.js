@@ -208,10 +208,10 @@ function Classrooms() {
           <Grid container spacing={5}>
             <Grid item className="cont">
               <Typography
-                variant="h2"
+                variant="h4"
                 style={{ color: "#E0B1CB", textAlign: "center" }}
               >
-                <b>Classrooms:</b>
+                <b>your classrooms:</b>
               </Typography>
               <div className="paper_list">
                 <Paper>
