@@ -26,7 +26,7 @@ import * as firebase from "firebase/app";
 
 import Navbar from "../common/Navbar";
 import "../styles/Classrooms.css";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -216,13 +216,20 @@ function Classrooms() {
               <div className="paper_list">
                 <Paper>
                   <List className="ov" component="nav" aria-label="classNames">
-                    {classes.map((name) => (
+                    {classes.map((name, i) => (
                       <ListItem key={name.code}>
-                        <ListItem key={name.code + "1"} button>
+                        <ListItem
+                          onClick={() =>
+                            history.push(`/availability/${name.code}`)
+                          }
+                          key={name.code + "1"}
+                          button
+                        >
                           <ListItemText
                             primary={name.name + " / " + name.code}
                           />
                         </ListItem>
+
                         <IconButton
                           onClick={() => deleteClass(name.code)}
                           edge="end"

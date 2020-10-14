@@ -4,11 +4,12 @@ import "./App.css";
 
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import UserAvailability from "./pages/UserAvailability";
+import Loading from "./pages/Loading"
+
 import { FirebaseAppProvider } from "reactfire";
 import Classrooms from "./pages/Classrooms";
+import MainAvailability from "./pages/MainAvailability";
 import HowItWorks from "./pages/HowItWorks";
-import Loading from "./pages/Loading"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -38,11 +39,14 @@ function App() {
             <Route exact path="/profile/:uid">
               <Profile />
             </Route>
-            <Route exact path="/availability/:uid">
+            {/* <Route exact path="/availability/:uid">
               <UserAvailability />
-            </Route>
+            </Route> */}
             <Route exact path="/myclasses/:uid">
               <Classrooms />
+            </Route>
+            <Route exact path="/availability/:classId">
+              <MainAvailability />
             </Route>
             <Route path="/">
               <Home />
