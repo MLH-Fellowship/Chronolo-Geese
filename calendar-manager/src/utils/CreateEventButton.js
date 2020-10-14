@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useUser, useFirestoreDocData} from 'reactfire';
+import {useFirestoreDocData} from 'reactfire';
 import {makeStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -30,7 +30,6 @@ export default function CreateEventButton(
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
   const [description, setDescription] = useState('');
-  const user = useUser();
   const classData = useFirestoreDocData(classesCollection.doc(classId));
 
   const handleClickOpen = async () => {
