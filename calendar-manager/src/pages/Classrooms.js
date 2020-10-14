@@ -99,13 +99,12 @@ function Classrooms() {
                 console.error("Error removing document: ", error);
               });
           } else {
-              console.log(students)
-              console.log(students.filter((stu) => stu !== user.uid))
+            // remove the student from the the list of students in classes
             firestore
               .collection("classes")
               .doc(i)
               .update({
-                students: students.filter((stu) => stu !== user.uid)
+                students: students.filter((stu) => stu !== user.uid),
               })
               .catch(function (error) {
                 console.log(error);
