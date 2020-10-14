@@ -35,7 +35,7 @@ It can be a challenge to agree on a specific time to meet up and collaborate on 
 - Devpost: https://devpost.com/software/chronolo-geese
 
 
-## Made with ❤️ by:
+## Made with ❤️ by Pod 1.1.6 (Git Geese):
 | Cirill Dalangin | Clara Chick | Pablo Domínguez Durán | Shiyue Zhang |
 | :----: | :---: | :---: | :---: |
 | [<img src="https://avatars2.githubusercontent.com/u/40480780?s=460&u=8c1edf8c533e2fb0a97dfce1342fcf2960a12c1b&v=4" width="100px;"/>](https://florenz.tech/)<br />[🌍](https://florenz.tech/) [💻](https://github.com/cdalangin) [🤝](https://www.linkedin.com/in/cfdalangin/) | [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQE8eYc0h_TPHg/profile-displayphoto-shrink_400_400/0?e=1608163200&v=beta&t=NVP7R8UDoVRYASyL6KgpzKFs9P9fgPYGYeuRiN86r_k" width="100px;"/>](https://clarachick.me/)<br />[🌍](https://clarachick.me/) [💻](https://github.com/KohinaTheCat) [🤝](https://www.linkedin.com/in/clarachick/) | [<img src="https://avatars2.githubusercontent.com/u/10246682?s=460&u=10d50fc5c9b71bfadb3927ebf2325250a520455a&v=4" width="100px;"/>](https://github.com/pablomdd)<br /> [💻](https://github.com/pablomdd) [🤝](https://www.linkedin.com/in/pablodominguezduran/) | [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQGFk_sA35kT-A/profile-displayphoto-shrink_400_400/0?e=1608163200&v=beta&t=_ZhIt1aPDDYj305ovVS_fAkPe_IKCW_ysY7JFRu9SuM" width="100px;"/>](https://github.com/zhangshyue)<br /> [💻](https://github.com/zhangshyue) [🤝](https://www.linkedin.com/in/shiyue-zhang-58828b196/) |
