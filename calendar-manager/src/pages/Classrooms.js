@@ -216,18 +216,19 @@ function Classrooms() {
               <div className="paper_list">
                 <Paper>
                   <List className="ov" component="nav" aria-label="classNames">
-
                     {classes.map((name, i) => (
-    <Link key={i} to={`/availability/${name.code}`}>
                       <ListItem key={name.code}>
-                        <ListItem key={name.code + "1"} button>
-
+                        <ListItem
+                          onClick={() =>
+                            history.push(`/availability/${name.code}`)
+                          }
+                          key={name.code + "1"}
+                          button
+                        >
                           <ListItemText
                             primary={name.name + " / " + name.code}
                           />
                         </ListItem>
-
-                      </Link>
 
                         <IconButton
                           onClick={() => deleteClass(name.code)}
