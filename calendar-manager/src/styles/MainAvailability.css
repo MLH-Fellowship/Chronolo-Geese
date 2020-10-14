@@ -1,0 +1,17 @@
+.main_availability_bg {
+  background-color: #9f86c0;
+  color: #5e548e;
+
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.schedule_selector{
+  transform: rotate(-90deg);
+  height: 150px;
+}

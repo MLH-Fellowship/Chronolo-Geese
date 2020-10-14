@@ -9,7 +9,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useFirestore, useUser, useFirestoreDocData } from "reactfire";
 
 import Navbar from "../common/Navbar";
-import Availability from "../profile/Availability";
+import Availability from "../utils/Availability";
 import "../styles/Profile.css";
 
 /**
@@ -29,7 +29,7 @@ export default function Profile() {
       .collection("users")
       .doc(user ? user.uid : uid)
   );
-  
+
   return (
     <div className="prof_bg">
       <Navbar />
@@ -48,8 +48,8 @@ export default function Profile() {
           </Grid>
 
           <Grid item xs={12}>
-            <Typography variant="h3" style={{ textAlign: "center" }}>
-              <b>Availability</b>:
+            <Typography variant="h4" style={{ textAlign: "center" }}>
+              <b>availability</b>:
             </Typography>
           </Grid>
           <Grid item xs={12} style={{ marginLeft: "0px" }}>

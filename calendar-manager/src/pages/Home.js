@@ -73,7 +73,7 @@ export default function Home() {
               component="button"
               variant="body2"
             >
-              {login ? "Sign In Instead" : "Log In Instead"}
+              {login ? "Sign Up Instead" : "Log In Instead"}
             </Link>
           </Grid>
         </Grid>

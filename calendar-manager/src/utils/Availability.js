@@ -43,7 +43,7 @@ export default function Availability({ uid }) {
         }
         numDays={7}
         minTime={8}
-        maxTime={22}
+        maxTime={24}
         hourlyChunks={2}
         timeFormat="h:mm A"
         dateFormat="ddd, MMM. DD"
