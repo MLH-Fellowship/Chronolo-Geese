@@ -148,9 +148,10 @@ export default function MainAvailability() {
   }, []);
 
   // TODO: make labels dynamic (right now time's not show correctly)
-  const xLabels = new Array(33)
+  const xLabels = new Array(32)
     .fill(0)
-    .map((_, i) => `${Math.floor(i / 2) + 8} : 00`);
+    .map((_, i) => `${Math.floor(i / 2) + 8}:00`);
+
   const yLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   // TODO: Find better way to not have professorsHeatmapDataMock AND professorsHeatmapData state.
