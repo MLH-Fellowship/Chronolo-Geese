@@ -9,7 +9,6 @@ import { FirebaseAppProvider } from "reactfire";
 import Classrooms from "./pages/Classrooms";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import NoAccess from "./pages/NoAccess";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAE6rcfe2QjFdVwwVtQN6dvEITo4mFgVPg",
@@ -39,9 +38,6 @@ function App() {
             </Route>
             <Route exact path="/myclasses/:uid">
               <Classrooms />
-            </Route>
-            <Route exact path="/noAccess">
-              <NoAccess />
             </Route>
             <Route path="/">
               <Home />

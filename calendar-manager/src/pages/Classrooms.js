@@ -24,7 +24,7 @@ import * as firebase from "firebase/app";
 
 import Navbar from "../common/Navbar";
 import "../styles/Classrooms.css";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -42,11 +42,11 @@ function Classrooms() {
 
   const history = useHistory();
   const user = useUser();
-  const { uid } = useParams();
+  // const { uid } = useParams();
 
   const classesCollection = useFirestore().collection("classes");
   const usersCollection = useFirestore().collection("users");
-  const classes = setFirestoreDocData(usersCollection.doc(uid)).classCodes;
+  const classes = setFirestoreDocData(usersCollection.doc(user.uid)).classCodes;
 
   const styles = useStyles();
 
@@ -54,9 +54,7 @@ function Classrooms() {
 
   if (!user) {
     history.push("/home");
-  } else if (uid !== user.uid) {
-    history.push("/noAccess");
-  } 
+  }
 
   const addClass = () => {
     let id = "";
@@ -64,12 +62,12 @@ function Classrooms() {
       .collection("classes")
       .add({
         title: className,
-        professors: [uid],
-        students: [uid],
+        professors: [user.uid],
+        students: [user.uid],
       })
       .then((pushed_user) => {
         id = pushed_user.w_.path.segments[1];
-        usersCollection.doc(uid).update({
+        usersCollection.doc(user.uid).update({
           classCodes: classes.concat({ code: id, name: className }),
         });
       });
@@ -82,9 +80,9 @@ function Classrooms() {
       .get()
       .then(function (doc) {
         if (doc.exists) {
-          console.log(doc.data());
+          // console.log(doc.data());
           docRef.update({
-            students: firebase.firestore.FieldValue.arrayUnion(uid),
+            students: firebase.firestore.FieldValue.arrayUnion(user.uid),
           });
           usersCollection.doc(user.uid).update({
             classCodes: firebase.firestore.FieldValue.arrayUnion({
