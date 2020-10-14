@@ -25,6 +25,7 @@ It can be a challenge to agree on a specific time to meet up and collaborate on 
 - [Reactfire](https://github.com/FirebaseExtended/reactfire) to connect the front and back
 - [React Schedule Tracker](https://github.com/bibekg/react-schedule-selector) for the availability tracker
 - [Sky](https://github.com/lucagez/sky) for the animations in the landing page
+- [Google Calendar API](https://developers.google.com/calendar) for creating meetings
 - [React Heatmap Grid](https://www.npmjs.com/package/react-heatmap-grid) and [React Heatmap Charts](https://apexcharts.com/react-chart-demos/heatmap-charts/) for the Availability Heatmap
 - [Sound React Hook](https://joshwcomeau.com/react/announcing-use-sound-react-hook/) for the Easter egg 😉
 
