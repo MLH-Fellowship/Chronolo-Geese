@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import {
-  useFirestore,
-  useUser,
-  useFirestoreDocData,
-} from "reactfire";
+import { useFirestore, useUser, useFirestoreDocData } from "reactfire";
 import { useHistory, useParams } from "react-router-dom";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -22,7 +19,6 @@ import isBetween from "dayjs/plugin/isBetween";
 import "../styles/MainAvailability.css";
 import Navbar from "../common/Navbar";
 import CreateEventButton from "../utils/CreateEventButton";
-
 
 /**
  * @return {ReactElement}
@@ -145,18 +141,10 @@ export default function MainAvailability() {
 
   const today = new Date();
 
-  const yLabels = [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat",
-  ];
-  
-  for(var i = 0; i < 7; i ++){
-    yLabels[i] = (today.getMonth() + 1) + "/" + (today.getDate() + i)
+  const yLabels = ["", "", "", "", "", "", ""];
+
+  for (var i = 0; i < 7; i++) {
+    yLabels[i] = today.getMonth() + 1 + "/" + (today.getDate() + i);
   }
 
   // TODO: Find better way to not have professorsHeatmapDataMock AND professorsHeatmapData state.
@@ -171,7 +159,7 @@ export default function MainAvailability() {
 
   // Effect matches the time interval of availability from students and professor
   // Proccess: professor/student -> availability -> isBetween any of the intervals of weekIntervals
-  
+
   // TODO: Improve algorithm (it's not fancy at all :p)
   function matchInterval() {
     if (
@@ -191,10 +179,6 @@ export default function MainAvailability() {
                   "[)"
                 )
               ) {
-                // console.log(
-                //   student.name,
-                //   `${time.toDate()} is between ${weekIntervals[day][chunk]}`
-                // );
                 studentsHeatmapDataMock[day][chunk]++;
                 return null;
               }
@@ -234,8 +218,6 @@ export default function MainAvailability() {
       cellHeight="1.5rem"
       xLabelsPos="top"
       // onClick={(x, y) => alert(`Clicked (${x}, ${y})`)}
-      // yLabelsPos="right"
-      // square
     />
   );
 
@@ -285,7 +267,7 @@ export default function MainAvailability() {
               <Paper
                 className={styles.classCodes.paperBg}
                 variant="outlined"
-                style={{width: "1000px"}}
+                style={{ width: "1000px" }}
               >
                 <div
                   style={{
