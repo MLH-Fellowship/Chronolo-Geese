@@ -31,7 +31,7 @@ export default function CreateEventButton({
   const [open, setOpen] = useState(false);
   const [summary, setSummary] = useState("");
   const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(Date.now() + 30 * 60 * 1000);
+  const [endTime, setEndTime] = useState(new Date(new Date().setMinutes(new Date().getMinutes() + 30)));
   const [description, setDescription] = useState("");
   const classData = useFirestoreDocData(classesCollection.doc(classId));
 
@@ -44,7 +44,7 @@ export default function CreateEventButton({
     setOpen(false);
     setSummary(classData.title + " meeting");
     setStartTime(new Date());
-    setEndTime(Date.now() + 30 * 60 * 1000);
+    setEndTime(new Date(new Date().setMinutes(new Date().getMinutes() + 30)));
   };
 
   const handleSave = () => {

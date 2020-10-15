@@ -64,7 +64,7 @@ function SignUp() {
               });
             }
           })
-          .then((res) => history.push("/availability/" + user.uid))
+          .then((res) => history.push("/profile/" + user.uid))
           .catch(function (error) {
             console.log("Error getting document:", error);
           });
